@@ -11,6 +11,7 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import CreateClass from './CreateClass';
 import EditClass from './EditClass';
+import CreateAssignment from './CreateAssignment';
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -69,7 +70,7 @@ export function BasicTabs() {
         <EditClass/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        Item Three
+        <CreateAssignment/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={3}>
         Item Four
