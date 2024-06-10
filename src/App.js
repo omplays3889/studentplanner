@@ -1,10 +1,11 @@
 import logo from './logo.svg';
 import './App.css';
 
-import TeacherLandingPage from './TeacherLandingPage';
+import StudentLandingPage from './StudentLandingPage';
+
 
 function App() {
-  return (<TeacherLandingPage/>
+  return (<StudentLandingPage/>
   );
 }
 

@@ -58,28 +58,21 @@ export function BasicTabs() {
     <Box sx={{ width: '100%'}}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="Create Class" {...a11yProps(0)} />
-          <Tab label="Edit Class" {...a11yProps(1)} />
-          <Tab label="Create Assignment" {...a11yProps(2)} />
-          <Tab label="View Assignments" {...a11yProps(3)} />
+        
+          <Tab label="Create Assignment" {...a11yProps(0)} />
+          <Tab label="View Assignments" {...a11yProps(1)} />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-       <CreateClass/>
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}>
-        <EditClass/>
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={2}>
         <CreateAssignment/>
       </CustomTabPanel>
-      <CustomTabPanel value={value} index={3}>
+      <CustomTabPanel value={value} index={1}>
         <ViewAssignments/>
       </CustomTabPanel>
     </Box>
   );
 }
-function TeacherLandingPage() {
+function StudentLandingPage() {
 
 
   return (
@@ -97,4 +90,4 @@ function TeacherLandingPage() {
   );
 }
 
-export default TeacherLandingPage;
+export default StudentLandingPage;

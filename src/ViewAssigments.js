@@ -1,5 +1,4 @@
 
-
 import './App.css';
 import { React, useState, useEffect } from 'react';
 import { Button } from '@mui/material';
@@ -13,17 +12,21 @@ import ListItemText from '@mui/material/ListItemText';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import TextField from '@mui/material/TextField';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import dayjs from 'dayjs';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
-function CreateAssignment() {
+function ViewAssignments() {
 
   const [data, setData] = useState([]);
   const [counter, setCounter] = useState(0);
   const [selectedIndex, setSelectedIndex] = useState();
+
+  const handleDelete = (index) => {
+    console.log("deleting.." + index);
+    console.log("Selected index = "+selectedIndex);
+    data.teacher_classes[selectedIndex].assignments.splice(index, 1);
+    setCounter(counter+1);
+    console.log("update state done");
+  };
+
 
   const handleChange = (event) => {
     for (let i = 0; i < data.teacher_classes.length; i++) {
@@ -36,7 +39,7 @@ function CreateAssignment() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch('./classes.json');
+      const response = await fetch('./assigments_teacher.json');
       const jsonData = await response.json();
       setData(jsonData);
       console.log(jsonData);
@@ -44,13 +47,10 @@ function CreateAssignment() {
     fetchData();
   }, []);
 
-
-
-
   if (data.teacher_classes) {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', width: '100%', overflowX: 'hidden', height: '100%' }}>
-        <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '20px', width: '250px', marginTop: '10px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '20px', width: '250px', marginTop:'10px'}}>
           <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
             <InputLabel id="demo-select-small-label">Class Name</InputLabel>
             <Select
@@ -67,39 +67,28 @@ function CreateAssignment() {
               ))}
             </Select>
           </FormControl>
-
         </div>
-        <div style={{marginLeft: '10px' , width: '275px'}}>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DemoContainer size='small' components={['DateTimePicker', 'DateTimePicker']}>
-              <DateTimePicker
-                label="Due Date"
-                slotProps={{ textField: { size: 'small' } }}
-                defaultValue={dayjs('2022-04-17T15:30')}
-                size='small'
-              />
-            </DemoContainer>
-          </LocalizationProvider>
-
-        </div>
-        <div style={{ display: 'flex', flexDirection: 'row', marginTop: '20px', marginLeft: '10px' }}>
-          <TextField
-            label="Assignment Name"
-            id="outlined-size-small"
-            size="small"
-          />
-        </div>
-        <div style={{ display: 'flex', flexDirection: 'row', marginTop: '20px', marginLeft: '10px' }}>
-          <TextField
-            multiline
-            style={{ width: '450px' }}
-            label="Assignment Details"
-            id="outlined-size-small"
-            size="small"
-          />
+        <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '20px', width: '600px'}}>
+        <List>
+        { data.teacher_classes[selectedIndex] && data.teacher_classes[selectedIndex].assignments && data.teacher_classes[selectedIndex].assignments.map((assignment, index)=> (
+           <ListItem key={index}
+           secondaryAction={
+             <IconButton edge="end" aria-label="delete">
+               <DeleteIcon  onClick={() => handleDelete(index)}/>
+             </IconButton>
+           }
+         >
+           <ListItemText
+             primary={assignment.duedate + " : " + assignment.title}
+             secondary={assignment.details}
+           />
+         </ListItem>
+          )) }
+             
+            </List>
         </div>
         <div style={{ display: 'flex', flexDirection: 'row', marginTop: '20px' }}>
-          <Button variant="contained">Create Assignment</Button>
+          <Button variant="contained">Save Changes</Button>
         </div>
       </div>
     );
@@ -108,4 +97,4 @@ function CreateAssignment() {
   }
 }
 
-export default CreateAssignment;
+export default ViewAssignments;

@@ -1,0 +1,37 @@
+{
+    "teacher_id": "1234",
+    "teacher_classes": [
+        {
+            "name": "History",
+            "id": "12341",
+            "assignments": [
+                {
+                    "title": "Assignment 1",
+                    "duedate": "19-22-1976",
+                    "details": "Assignment 1 Deatils, Assignment 1 Deatils, Assignment 1 Deatils, Assignment 1 Deatils"
+                },
+                {
+                    "title": "Assignment 2",
+                    "duedate":"8/2/1794",
+                    "details": "Assignment 2 Deatils, Assignment 2 Deatils, Assignment 2 Deatils, Assignment 2 Deatils"
+                }
+            ]
+        },
+        {
+            "name": "Math-1",
+            "id": "12342",
+            "assignments": [
+                {
+                    "title": "Assignment 1",
+                    "duedate": "4-6-2756",
+                    "details": "Assignment 1 Deatils, Assignment 1 Deatils, Assignment 1 Deatils, Assignment 1 Deatils"
+                },
+                {
+                    "title": "Assignment 2",
+                   "duedate":"12-12-2020",
+                    "details": "Assignment 2 Deatils, Assignment 2 Deatils, Assignment 2 Deatils, Assignment 2 Deatils"
+                }
+            ]
+        }
+    ]
+}
