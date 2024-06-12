@@ -1,11 +1,24 @@
 import logo from './logo.svg';
 import './App.css';
 import { GoogleLogin } from '@react-oauth/google';
+import { useContext } from 'react';
+import { AuthContext } from './AuthContext';
+import { jwtDecode } from 'jwt-decode';
+import { Button } from '@mui/material';
+
 function Header() {
-  const responseMessage = (response) => {
-    console.log(response);
+  const { user, signIn, signOut } = useContext(AuthContext);
+
+  const onSuccess = (response) => {
+    var decodedHeader = jwtDecode(response.credential);
+    console.log(decodedHeader);
+
+    const { name, email } = decodedHeader;
+    console.log(name + email);
+
+    signIn(decodedHeader);
 };
-const errorMessage = (error) => {
+const onError = (error) => {
   console.log(error);
 };
 
@@ -16,7 +29,12 @@ const errorMessage = (error) => {
     <h1 style={{ color: '#1564FF',paddingLeft: '20px' }}>Student Planner</h1>
   </div>  
     <div style={{marginTop: '25px', paddingRight:'20px'}}>
-    <GoogleLogin onSuccess={responseMessage} onError={errorMessage} />
+      {!user ? 
+    <GoogleLogin onSuccess={onSuccess} onError={onError} />
+    : 
+    <Button variant="contained"  sx={{ bgcolor: '#1564FF', marginLeft: '5px'}} size="medium" onClick={signOut}>
+         Log Out
+        </Button>}
     </div>
 </div>
 
