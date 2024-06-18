@@ -13,6 +13,7 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   const signIn = (userData) => {
+    alert(JSON.stringify(userData.email));
     setUser(userData);
     localStorage.setItem('user', JSON.stringify(userData));
   };

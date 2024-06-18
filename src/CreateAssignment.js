@@ -26,8 +26,8 @@ function CreateAssignment() {
   const [selectedIndex, setSelectedIndex] = useState();
 
   const handleChange = (event) => {
-    for (let i = 0; i < data.teacher_classes.length; i++) {
-      if (data.teacher_classes[i].name === event.target.value) {
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].class_name === event.target.value) {
         setSelectedIndex(i);
       }
     }
@@ -47,7 +47,7 @@ function CreateAssignment() {
 
 
 
-  if (data.teacher_classes) {
+  if (data) {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', width: '100%', overflowX: 'hidden', height: '100%' }}>
         <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '20px', width: '250px', marginTop: '10px' }}>
@@ -56,13 +56,13 @@ function CreateAssignment() {
             <Select
               labelId="demo-select-small-label"
               id="demo-select-small"
-              value={selectedIndex >= 0 ? data.teacher_classes[selectedIndex].name : ""}
+              value={selectedIndex >= 0 ? data[selectedIndex].class_name : ""}
               label="ClassName"
               onChange={handleChange}
             >
-              {data.teacher_classes.map(myClass => (
-                <MenuItem key={myClass.id} value={myClass.name}>
-                  {myClass.name}
+              {data.map(myClass => (
+                <MenuItem key={myClass.id} value={myClass.class_name}>
+                  {myClass.class_name}
                 </MenuItem>
               ))}
             </Select>

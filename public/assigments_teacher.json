@@ -1,37 +1,29 @@
-{
-    "teacher_id": "1234",
-    "teacher_classes": [
-        {
-            "name": "History",
-            "id": "12341",
-            "assignments": [
-                {
-                    "title": "Assignment 1",
-                    "duedate": "19-22-1976",
-                    "details": "Assignment 1 Deatils, Assignment 1 Deatils, Assignment 1 Deatils, Assignment 1 Deatils"
-                },
-                {
-                    "title": "Assignment 2",
-                    "duedate":"8/2/1794",
-                    "details": "Assignment 2 Deatils, Assignment 2 Deatils, Assignment 2 Deatils, Assignment 2 Deatils"
-                }
-            ]
-        },
-        {
-            "name": "Math-1",
-            "id": "12342",
-            "assignments": [
-                {
-                    "title": "Assignment 1",
-                    "duedate": "4-6-2756",
-                    "details": "Assignment 1 Deatils, Assignment 1 Deatils, Assignment 1 Deatils, Assignment 1 Deatils"
-                },
-                {
-                    "title": "Assignment 2",
-                   "duedate":"12-12-2020",
-                    "details": "Assignment 2 Deatils, Assignment 2 Deatils, Assignment 2 Deatils, Assignment 2 Deatils"
-                }
-            ]
-        }
-    ]
-}
+[
+    {
+        "id": 1,
+        "owner_email_id": "omplays3889@gmail.com",
+        "class_name": "History",
+        "class_id": 1,
+        "title": "Brochure",
+        "details": "A brochure of sailing west!",
+        "duedate": "9/7/2024"
+    },
+    {
+        "id": 2,
+        "owner_email_id": "omplays3889@gmail.com",
+        "class_name": "Maths",
+        "class_id": 2,
+        "title": "Algebra",
+        "details": "Calculate Algebra!",
+        "duedate": "9/7/2024"
+    },
+    {
+        "id": 3,
+        "owner_email_id": "patel3889@mydusd.org",
+        "class_name": "History",
+        "class_id": 1,
+        "title": "Brochure 2",
+        "details": "A brochure of sailing west!",
+        "duedate": "9/7/2024"
+    }
+]

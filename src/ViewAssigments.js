@@ -11,43 +11,53 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import TextField from '@mui/material/TextField';
+import { useContext } from 'react';
+import { AuthContext } from './AuthContext';
 
 function ViewAssignments() {
 
+  const { user} = useContext(AuthContext);
   const [data, setData] = useState([]);
+  const [classes, setClasses] = useState([]);
   const [counter, setCounter] = useState(0);
   const [selectedIndex, setSelectedIndex] = useState();
 
   const handleDelete = (index) => {
     console.log("deleting.." + index);
     console.log("Selected index = "+selectedIndex);
-    data.teacher_classes[selectedIndex].assignments.splice(index, 1);
+    data.splice(index, 1);
     setCounter(counter+1);
     console.log("update state done");
   };
 
 
   const handleChange = (event) => {
-    for (let i = 0; i < data.teacher_classes.length; i++) {
-      if (data.teacher_classes[i].name === event.target.value) {
+    for (let i = 0; i < classes.length; i++) {
+      if (classes[i] === event.target.value) {
         setSelectedIndex(i);
       }
     }
-    console.log(event.target.value);
+    console.log(classes[selectedIndex]);
   };
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch('./assigments_teacher.json');
       const jsonData = await response.json();
+      const jsonClasses = [];
+      for (let i = 0; i < jsonData.length; i++) {
+        if (jsonClasses.includes(jsonData[i].class_name) == false) {
+          jsonClasses.push(jsonData[i].class_name);
+        }
+      }
+      setClasses(jsonClasses);
       setData(jsonData);
       console.log(jsonData);
     }
     fetchData();
   }, []);
 
-  if (data.teacher_classes) {
+  if (data) {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', width: '100%', overflowX: 'hidden', height: '100%' }}>
         <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '20px', width: '250px', marginTop:'10px'}}>
@@ -56,33 +66,36 @@ function ViewAssignments() {
             <Select
               labelId="demo-select-small-label"
               id="demo-select-small"
-              value={selectedIndex >= 0 ? data.teacher_classes[selectedIndex].name : ""}
+              value={selectedIndex >= 0 ? classes[selectedIndex] : ""}
               label="ClassName"
               onChange={handleChange}
             >
-              {data.teacher_classes.map(myClass => (
-                <MenuItem key={myClass.id} value={myClass.name}>
-                  {myClass.name}
+              {classes.map(myClass => (
+                <MenuItem key={myClass} value={myClass}>
+                  {myClass}
                 </MenuItem>
               ))}
             </Select>
           </FormControl>
         </div>
-        <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '20px', width: '600px'}}>
+        <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '20px', width: '500px'}}>
         <List>
-        { data.teacher_classes[selectedIndex] && data.teacher_classes[selectedIndex].assignments && data.teacher_classes[selectedIndex].assignments.map((assignment, index)=> (
+        { data && data.map((assignment, index)=> (
+          assignment.class_name === classes[selectedIndex] ?
            <ListItem key={index}
            secondaryAction={
+            assignment.owner_email_id === user.email ?
              <IconButton edge="end" aria-label="delete">
                <DeleteIcon  onClick={() => handleDelete(index)}/>
              </IconButton>
+             : <></>
            }
          >
            <ListItemText
              primary={assignment.duedate + " : " + assignment.title}
              secondary={assignment.details}
            />
-         </ListItem>
+         </ListItem> : <></>
           )) }
              
             </List>

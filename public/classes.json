@@ -1,62 +1,17 @@
-{
-    "teacher_id": "1234",
-    "teacher_classes": [{
-        "name": "History",
-        "id": "12341",
-        "emails":[ 
-        "patel3889@mydusd.org",
-        "cmaheta84@mydusd.org",
-        "sanpatel@mydusd.org",
-        "patel2889@mydusd.org",
-        "cmaheta24@mydusd.org",
-        "sanpatel2@mydusd.org",
-        "patel4889@mydusd.org",
-        "cmaheta44@mydusd.org",
-        "sanpatel4@mydusd.org",
-        "patel5889@mydusd.org",
-        "cmaheta54@mydusd.org",
-        "sanpatel5@mydusd.org"
-        ]
-		
+[
+    {
+        "id": 1,
+        "teacher_id": 2,
+        "class_name": "History",
+        "teacher_email_id": "omplays3889@gmail.com",
+        "email_ids": "patel3889@mydusd.org, cmaheta84@gmail.com"
     },
     {
-        "name": "Math-1",
-        "id": "12342",
-        "emails":[ 
-        "cmaheta24@mydusd.org",
-        "sanpatel2@mydusd.org",
-        "patel4889@mydusd.org",
-        "cmaheta44@mydusd.org",
-        "sanpatel4@mydusd.org",
-        "patel5889@mydusd.org"
-        ]
-		
-    },
-    {
-        "name": "Math-2",
-        "id": "12343",
-        "emails":[ 
-        "sanpatel2@mydusd.org",
-        "patel4889@mydusd.org",
-        "cmaheta44@mydusd.org",
-        "sanpatel4@mydusd.org",
-        "patel5889@mydusd.org",
-        "cmaheta54@mydusd.org",
-        "sanpatel5@mydusd.org"
-        ]
-		
-    },
-    {
-        "name": "Algebra",
-        "id": "12344",
-        "emails":[ 
-        "patel3889@mydusd.org",
-        "cmaheta84@mydusd.org",
-        "sanpatel@mydusd.org",
-        "patel2889@mydusd.org",
-        "cmaheta24@mydusd.org",
-        "sanpatel2@mydusd.org"
-        ]
-		
-    }]
-}
+        "id": 2,
+        "teacher_id": 2,
+        "class_name": "Maths",
+        "teacher_email_id": "omplays3889@gmail.com",
+        "email_ids": "patel3889@mydusd.org, cmaheta84@gmail.com"
+    }
+
+]
