@@ -12,6 +12,9 @@ import ListItemText from '@mui/material/ListItemText';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import TextField from '@mui/material/TextField';
+import { obtainClassesAPICall } from './API';
+import { useContext } from 'react';
+import { AuthContext } from './AuthContext';
 
 function EditClass() {
 
@@ -19,6 +22,7 @@ function EditClass() {
   const [emails,setEmails] = useState([]);
   const [counter, setCounter] = useState(0);
   const [selectedIndex, setSelectedIndex] = useState();
+  const { user } = useContext(AuthContext);
 
   const handleDelete = (emailIndex) => {
     console.log("deleting.." + emailIndex);
@@ -41,10 +45,9 @@ function EditClass() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch('./classes.json');
-      const jsonData = await response.json();
-      setData(jsonData);
-      console.log(jsonData);
+      //const response = await fetch('./classes.json');
+      const response = await obtainClassesAPICall(user);
+      setData(response);
     }
     fetchData();
   }, []);

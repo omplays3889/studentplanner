@@ -1,78 +1,80 @@
 
 export const getUserAPICall = async (userData) => {
-    let api_endpoint = 'https://studentplannerapi.azurewebsites.net/api/getUser?email_id='+userData.email;
-    const response =  await fetch(api_endpoint, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Host': 'studentplannerapi.azurewebsites.net',
-        'Authorization': 'Basic c3R1ZGVudHBsYW5uZXItYWRtaW4tb206NTA1MjQzMTMtYjUzMy00ZjlmLTg5ODktYmNjYzNlZjcwOTQ0'
-      }
-    }).catch(error => console.error('There was a problem with the fetch operation:', error));
-
-    if(response && response.ok) {
-      const data = await response.json();
-      return data;
-    } else {
-      return "ERROR";
+  let api_endpoint = 'https://studentplannerapi.azurewebsites.net/api/getUser?email_id=' + userData.email;
+  const response = await fetch(api_endpoint, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Host': 'studentplannerapi.azurewebsites.net',
+      'Authorization': 'Basic c3R1ZGVudHBsYW5uZXItYWRtaW4tb206NTA1MjQzMTMtYjUzMy00ZjlmLTg5ODktYmNjYzNlZjcwOTQ0'
     }
+  }).catch(error => console.error('There was a problem with the fetch operation:', error));
+
+  if (response && response.ok) {
+    const data = await response.json();
+    return data;
+  } else {
+    return "ERROR";
+  }
+}
+
+export const createUserAPICall = async (userData) => {
+  let api_endpoint = 'https://studentplannerapi.azurewebsites.net/api/createuser?email_id=' + userData.email;
+  const response = await fetch(api_endpoint, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Basic c3R1ZGVudHBsYW5uZXItYWRtaW4tb206NTA1MjQzMTMtYjUzMy00ZjlmLTg5ODktYmNjYzNlZjcwOTQ0'
+    },
+    body: JSON.stringify({
+      user_type: userData.user_type,
+      verification_code: userData.verification_code
+    })
+  }).catch(error => console.error('There was a problem with the fetch operation:', error));
+
+  if (response && response.ok) {
+    const data = await response.json();
+    return data;
+  } else {
+    return "ERROR";
+  }
+}
+
+export const obtainAssignmentsAPICall = async (userData) => {
+  let api_endpoint = 'https://studentplannerapi.azurewebsites.net/api/obtainassignments?email_id=' + userData.email_id;
+  const response = await fetch(api_endpoint, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Host': 'studentplannerapi.azurewebsites.net',
+      'Authorization': 'Basic c3R1ZGVudHBsYW5uZXItYWRtaW4tb206NTA1MjQzMTMtYjUzMy00ZjlmLTg5ODktYmNjYzNlZjcwOTQ0'
+    }
+  }).catch(error => console.error('There was a problem with the fetch operation:', error));
+
+  if (response && response.ok) {
+    const data = await response.json();
+    return data;
+  } else {
+    return "ERROR";
+  }
+}
+
+export const obtainClassesAPICall = async (userData) => {
+  let api_endpoint = 'https://studentplannerapi.azurewebsites.net/api/obtainclasses?email_id=' + userData.email_id;
+
+  const response = await fetch(api_endpoint, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Basic c3R1ZGVudHBsYW5uZXItYWRtaW4tb206NTA1MjQzMTMtYjUzMy00ZjlmLTg5ODktYmNjYzNlZjcwOTQ0'
+    }
+  }).catch(error => console.error('There was a problem with the fetch operation:', error));
+
+  if (response && response.ok) {
+    const data = await response.json();
+    return data;
+  } else {
+    return "ERROR";
   }
 
-  export const createUserAPICall = async (userData) => {
-    let api_endpoint = 'https://studentplannerapi.azurewebsites.net/api/createuser?email_id='+userData.email;
-    const response =  await  fetch(api_endpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Basic c3R1ZGVudHBsYW5uZXItYWRtaW4tb206NTA1MjQzMTMtYjUzMy00ZjlmLTg5ODktYmNjYzNlZjcwOTQ0'
-      },
-      body: JSON.stringify({
-        user_type: userData.user_type,
-        verification_code: userData.verification_code
-      })
-    }).catch(error => console.error('There was a problem with the fetch operation:', error));
-    
-    if(response && response.ok) {
-      const data = await response.json();
-      return data;
-    } else {
-      return "ERROR";
-    }
-  }
-
-  export const obtainAssignmentsAPICall = async (userData) => {
-    let api_endpoint = 'https://studentplannerapi.azurewebsites.net/api/obtainassignments?email_id='+userData.email;
-    const response =  await fetch(api_endpoint, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Host': 'studentplannerapi.azurewebsites.net',
-        'Authorization': 'Basic c3R1ZGVudHBsYW5uZXItYWRtaW4tb206NTA1MjQzMTMtYjUzMy00ZjlmLTg5ODktYmNjYzNlZjcwOTQ0'
-      }
-    }).catch(error => console.error('There was a problem with the fetch operation:', error));
-
-    if(response && response.ok) {
-      const data = await response.json();
-      return data;
-    } else {
-      return "ERROR";
-    }
-  }
-  export const obtainClassesAPICall = async (userData) => {
-    let api_endpoint = 'https://studentplannerapi.azurewebsites.net/api/obtainclasses?email_id='+userData.email;
-    const response =  await fetch(api_endpoint, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Host': 'studentplannerapi.azurewebsites.net',
-        'Authorization': 'Basic c3R1ZGVudHBsYW5uZXItYWRtaW4tb206NTA1MjQzMTMtYjUzMy00ZjlmLTg5ODktYmNjYzNlZjcwOTQ0'
-      }
-    }).catch(error => console.error('There was a problem with the fetch operation:', error));
-
-    if(response && response.ok) {
-      const data = await response.json();
-      return data;
-    } else {
-      return "ERROR";
-    }
-  }
+}

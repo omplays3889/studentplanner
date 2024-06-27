@@ -24,7 +24,6 @@ const AuthProvider = ({ children }) => {
         setUser(data[0]);
         localStorage.setItem('user', JSON.stringify(data[0]));
       } else {
-        alert("set user 2 done");
         setUser(userData);
         localStorage.setItem('user', JSON.stringify(userData));
       }

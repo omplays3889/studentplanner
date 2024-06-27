@@ -43,8 +43,6 @@ function ViewAssignments() {
 
   useEffect(() => {
     const fetchData = async () => {
-      alert(user.email_id);
-      alert(JSON.stringify(user));
       const response = await obtainAssignmentsAPICall(user);
       const jsonData = response;
       const jsonClasses = [];
