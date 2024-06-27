@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
+import {getUserAPICall} from './API.js'
 
 const AuthContext = createContext();
 
@@ -12,16 +13,28 @@ const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  const signIn = (userData) => {
-    alert(JSON.stringify(userData.email));
-    setUser(userData);
-    localStorage.setItem('user', JSON.stringify(userData));
+
+  const signIn = async (userData) => {
+    
+    const data = await getUserAPICall(userData);
+    if(data === "ERROR") {
+      alert("error fetching user information");
+    } else {
+      if(data && data[0]) {
+        setUser(data[0]);
+        localStorage.setItem('user', JSON.stringify(data[0]));
+      } else {
+        setUser(userData);
+        localStorage.setItem('user', JSON.stringify(userData));
+      }
+  }
   };
 
   const signOut = () => {
     setUser(null);
     localStorage.removeItem('user');
   };
+
 
   return (
     <AuthContext.Provider value={{ user, signIn, signOut }}>
