@@ -16,21 +16,23 @@ import TextField from '@mui/material/TextField';
 function EditClass() {
 
   const [data, setData] = useState([]);
+  const [emails,setEmails] = useState([]);
   const [counter, setCounter] = useState(0);
   const [selectedIndex, setSelectedIndex] = useState();
 
   const handleDelete = (emailIndex) => {
     console.log("deleting.." + emailIndex);
     console.log("Selected index = "+selectedIndex);
-    data.teacher_classes[selectedIndex].emails.splice(emailIndex, 1);
+    emails.splice(emailIndex, 1);
     setCounter(counter+1);
     console.log("update state done");
   };
 
 
   const handleChange = (event) => {
-    for (let i = 0; i < data.teacher_classes.length; i++) {
-      if (data.teacher_classes[i].name === event.target.value) {
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].class_name === event.target.value) {
+        setEmails(data[i].email_ids.split(','));
         setSelectedIndex(i);
       }
     }
@@ -47,7 +49,7 @@ function EditClass() {
     fetchData();
   }, []);
 
-  if (data.teacher_classes) {
+  if (data && data.length > 0) {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', width: '100%', overflowX: 'hidden', height: '100%' }}>
         <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '20px', width: '250px', marginTop:'10px'}}>
@@ -56,13 +58,13 @@ function EditClass() {
             <Select
               labelId="demo-select-small-label"
               id="demo-select-small"
-              value={selectedIndex >= 0 ? data.teacher_classes[selectedIndex].name : ""}
+              value={selectedIndex >= 0 ? data[selectedIndex].class_name : ""}
               label="ClassName"
               onChange={handleChange}
             >
-              {data.teacher_classes.map(myClass => (
-                <MenuItem key={myClass.id} value={myClass.name}>
-                  {myClass.name}
+              {data.map(myClass => (
+                <MenuItem key={myClass.id} value={myClass.class_name}>
+                  {myClass.class_name}
                 </MenuItem>
               ))}
             </Select>
@@ -70,7 +72,7 @@ function EditClass() {
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '20px', width: '400px'}}>
         <List>
-        { data.teacher_classes[selectedIndex] && data.teacher_classes[selectedIndex].emails && data.teacher_classes[selectedIndex].emails.map((option, index)=> (
+        { selectedIndex >= 0 && emails && emails.map((option, index)=> (
            <ListItem key={index}
            secondaryAction={
              <IconButton edge="end" aria-label="delete">
@@ -87,7 +89,7 @@ function EditClass() {
             </List>
         </div>
         <div style={{ display: 'flex', flexDirection: 'row', marginTop: '20px' }}>
-        { data.teacher_classes[selectedIndex] && 
+        { data[selectedIndex] && 
         <TextField
           multiline
           style={{width:'400px'}}

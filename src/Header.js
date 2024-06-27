@@ -17,26 +17,26 @@ function Header() {
     console.log(name + email);
 
     signIn(decodedHeader);
-};
-const onError = (error) => {
-  console.log(error);
-};
+  };
+  const onError = (error) => {
+    console.log(error);
+  };
 
   return (
 
-<div style={{  display:'flex', justifyContent: 'space-between', borderBottom:  '3px solid transparent', borderImage: `linear-gradient(to right,lightBlue, blue)`, borderImageSlice:'1' }}>
- <div>
-    <h1 style={{ color: '#1564FF',paddingLeft: '20px' }}>Student Planner</h1>
-  </div>  
-    <div style={{marginTop: '25px', paddingRight:'20px'}}>
-      {!user ? 
-    <GoogleLogin onSuccess={onSuccess} onError={onError} />
-    : 
-    <Button variant="contained"  sx={{ bgcolor: '#1564FF', marginLeft: '5px'}} size="medium" onClick={signOut}>
-         Log Out
-        </Button>}
+    <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '3px solid transparent', borderImage: `linear-gradient(to right,lightBlue, blue)`, borderImageSlice: '1' }}>
+      <div>
+        <h1 style={{ color: '#1564FF', paddingLeft: '20px' }}>Student Planner</h1>
+      </div>
+      <div style={{ marginTop: '25px', paddingRight: '20px' }}>
+        {!user ?
+          <GoogleLogin onSuccess={onSuccess} onError={onError} />
+          :
+          <Button variant="contained" sx={{ bgcolor: '#1564FF', marginLeft: '5px' }} size="medium" onClick={signOut}>
+            Log Out
+          </Button>}
+      </div>
     </div>
-</div>
 
 
 
