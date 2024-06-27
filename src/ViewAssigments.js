@@ -13,6 +13,7 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useContext } from 'react';
 import { AuthContext } from './AuthContext';
+import { obtainAssignmentsAPICall } from './API';
 
 function ViewAssignments() {
 
@@ -42,8 +43,10 @@ function ViewAssignments() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch('./assigments_teacher.json');
-      const jsonData = await response.json();
+      alert(user.email_id);
+      alert(JSON.stringify(user));
+      const response = await obtainAssignmentsAPICall(user);
+      const jsonData = response;
       const jsonClasses = [];
       for (let i = 0; i < jsonData.length; i++) {
         if (jsonClasses.includes(jsonData[i].class_name) == false) {
