@@ -31,12 +31,20 @@ function EditClass() {
       let class_detail = {};
       class_detail.class_id = data[selectedIndex].id;
       class_detail.class_name = data[selectedIndex].class_name;
-      class_detail.email_ids = emails.join(',')+','+additionalEmails;
+      class_detail.email_ids = cleanEmails(emails.join(',')+','+additionalEmails);
       await updateClassAPICall(user,class_detail);
       setCounter(counter+1);
       await fetchData();
     }
   }
+
+  const cleanEmails = (emailString) => {
+    return emailString
+      .split(',') // Split the string by commas
+      .map(email => email.trim()) // Trim any leading/trailing whitespace from each part
+      .filter(email => email !== '') // Filter out any empty strings
+      .join(', '); // Join the parts back together with a single comma and space
+  };
 
   const handleDelete = (emailIndex) => {
     emails.splice(emailIndex, 1);

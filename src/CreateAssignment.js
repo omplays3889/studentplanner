@@ -18,12 +18,35 @@ import dayjs from 'dayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import {obtainClassesAPICall} from './API.js';
+import { useContext } from 'react';
+import { AuthContext } from './AuthContext';
 
 function CreateAssignment() {
 
   const [data, setData] = useState([]);
   const [counter, setCounter] = useState(0);
   const [selectedIndex, setSelectedIndex] = useState();
+  const [selectedDateTime, setSelectedDateTime] = useState(dayjs('2022-04-17T15:30'));
+  const [name, setName] = useState('');
+  const [details, setDetails] = useState('');
+  const { user } = useContext(AuthContext);
+
+  const createAssignment = async () => {
+    let assignment_detail = {};
+    assignment_detail.class_name = data[selectedIndex]?.class_name;
+    assignment_detail.class_id = data[selectedIndex]?.id;
+
+    assignment_detail.title = name;
+    assignment_detail.details = details;
+    assignment_detail.duedate = selectedDateTime;
+
+    alert(JSON.stringify(assignment_detail));
+  }
+
+  const handleDateTimeChange = (newValue) => {
+    setSelectedDateTime(newValue);
+  };
 
   const handleChange = (event) => {
     for (let i = 0; i < data.length; i++) {
@@ -36,10 +59,9 @@ function CreateAssignment() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch('./classes.json');
-      const jsonData = await response.json();
-      setData(jsonData);
-      console.log(jsonData);
+      const response = await obtainClassesAPICall(user);
+      setData(response);
+      console.log(response);
     }
     fetchData();
   }, []);
@@ -75,8 +97,9 @@ function CreateAssignment() {
               <DateTimePicker
                 label="Due Date"
                 slotProps={{ textField: { size: 'small' } }}
-                defaultValue={dayjs('2022-04-17T15:30')}
                 size='small'
+                value={selectedDateTime}
+                onChange={handleDateTimeChange}
               />
             </DemoContainer>
           </LocalizationProvider>
@@ -87,6 +110,7 @@ function CreateAssignment() {
             label="Assignment Name"
             id="outlined-size-small"
             size="small"
+            onChange={e => setName(e.target.value)}
           />
         </div>
         <div style={{ display: 'flex', flexDirection: 'row', marginTop: '20px', marginLeft: '10px' }}>
@@ -96,10 +120,11 @@ function CreateAssignment() {
             label="Assignment Details"
             id="outlined-size-small"
             size="small"
+            onChange={e => setDetails(e.target.value)}
           />
         </div>
         <div style={{ display: 'flex', flexDirection: 'row', marginTop: '20px' }}>
-          <Button variant="contained">Create Assignment</Button>
+          <Button variant="contained" onClick={createAssignment}>Create Assignment</Button>
         </div>
       </div>
     );
