@@ -3,15 +3,21 @@ import './App.css';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { useState } from 'react';
+import { useContext } from 'react';
+import { AuthContext } from './AuthContext';
+import {createClassAPICall} from './API.js';
 
 function CreateClass() {
 
   const [name, setName] = useState('');
   const [emails, setEmails] = useState('');
+  const {user} = useContext(AuthContext);
 
-  const createClass = () => {
-    alert("Creating Class : "+ name);
-    alert("Emails: "+ emails);
+  const createClass = async () => {
+    let class_detail = {};
+    class_detail.class_name = name;
+    class_detail.email_ids = emails;
+    await createClassAPICall(user, class_detail);
   }
 
   return (

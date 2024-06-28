@@ -15,21 +15,32 @@ import TextField from '@mui/material/TextField';
 import { obtainClassesAPICall } from './API';
 import { useContext } from 'react';
 import { AuthContext } from './AuthContext';
+import {updateClassAPICall} from './API.js';
 
 function EditClass() {
 
   const [data, setData] = useState([]);
   const [emails,setEmails] = useState([]);
+  const [additionalEmails, setAdditionalEmails] = useState('');
   const [counter, setCounter] = useState(0);
   const [selectedIndex, setSelectedIndex] = useState();
   const { user } = useContext(AuthContext);
 
+  const saveClass = async () => {
+    if(selectedIndex >= 0) {
+      let class_detail = {};
+      class_detail.class_id = data[selectedIndex].id;
+      class_detail.class_name = data[selectedIndex].class_name;
+      class_detail.email_ids = emails.join(',')+','+additionalEmails;
+      await updateClassAPICall(user,class_detail);
+      setCounter(counter+1);
+      await fetchData();
+    }
+  }
+
   const handleDelete = (emailIndex) => {
-    console.log("deleting.." + emailIndex);
-    console.log("Selected index = "+selectedIndex);
     emails.splice(emailIndex, 1);
     setCounter(counter+1);
-    console.log("update state done");
   };
 
 
@@ -43,12 +54,15 @@ function EditClass() {
     console.log(event.target.value);
   };
 
+  const fetchData = async () => {
+    //const response = await fetch('./classes.json');
+    const response = await obtainClassesAPICall(user);
+    setData(response);
+    setEmails(response[selectedIndex]?.email_ids.split(','));
+    setAdditionalEmails('');
+  }
+
   useEffect(() => {
-    const fetchData = async () => {
-      //const response = await fetch('./classes.json');
-      const response = await obtainClassesAPICall(user);
-      setData(response);
-    }
     fetchData();
   }, []);
 
@@ -76,6 +90,7 @@ function EditClass() {
         <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '20px', width: '400px'}}>
         <List>
         { selectedIndex >= 0 && emails && emails.map((option, index)=> (
+          option && option.length > 0 ?
            <ListItem key={index}
            secondaryAction={
              <IconButton edge="end" aria-label="delete">
@@ -87,6 +102,7 @@ function EditClass() {
              primary={option}
            />
          </ListItem>
+          : <></>
           )) }
              
             </List>
@@ -99,11 +115,13 @@ function EditClass() {
           label="Additional Student Email Whitelist"
           id="outlined-size-small"
           size="small"
+          value={additionalEmails}
+          onChange={e => setAdditionalEmails(e.target.value)}
          />
         }
       </div>
         <div style={{ display: 'flex', flexDirection: 'row', marginTop: '20px' }}>
-          <Button variant="contained">Save Class</Button>
+          <Button variant="contained" onClick={saveClass}>Save Class</Button>
         </div>
       </div>
     );

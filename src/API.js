@@ -78,3 +78,45 @@ export const obtainClassesAPICall = async (userData) => {
   }
 
 }
+
+export const createClassAPICall = async (userData, class_detail) => {
+  let api_endpoint = 'https://studentplannerapi.azurewebsites.net/api/createclass?email_id=' + userData.email_id;
+
+  const response = await fetch(api_endpoint, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Basic c3R1ZGVudHBsYW5uZXItYWRtaW4tb206NTA1MjQzMTMtYjUzMy00ZjlmLTg5ODktYmNjYzNlZjcwOTQ0'
+    },
+    body: JSON.stringify(class_detail)
+  }).catch(error => console.error('There was a problem with the fetch operation:', error));
+
+  if (response && response.ok) {
+    const data = await response.json();
+    return data;
+  } else {
+    return "ERROR";
+  }
+
+}
+
+export const updateClassAPICall = async (userData, class_detail) => {
+  let api_endpoint = 'https://studentplannerapi.azurewebsites.net/api/updateclass?email_id=' + userData.email_id;
+
+  const response = await fetch(api_endpoint, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Basic c3R1ZGVudHBsYW5uZXItYWRtaW4tb206NTA1MjQzMTMtYjUzMy00ZjlmLTg5ODktYmNjYzNlZjcwOTQ0'
+    },
+    body: JSON.stringify(class_detail)
+  }).catch(error => console.error('There was a problem with the fetch operation:', error));
+
+  if (response && response.ok) {
+    const data = await response.json();
+    return data;
+  } else {
+    return "ERROR";
+  }
+
+}
