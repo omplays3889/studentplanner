@@ -141,3 +141,26 @@ export const createAssignmentAPICall = async (userData, assignment_detail) => {
   }
 
 }
+
+export const deleteAssignmentAPICall = async (userData, assignment_id) => {
+  let api_endpoint = 'https://studentplannerapi.azurewebsites.net/api/deleteassignment?email_id=' + userData.email_id;
+
+  const response = await fetch(api_endpoint, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Basic c3R1ZGVudHBsYW5uZXItYWRtaW4tb206NTA1MjQzMTMtYjUzMy00ZjlmLTg5ODktYmNjYzNlZjcwOTQ0'
+    },
+    body: JSON.stringify({
+      "assignment_id":assignment_id
+    })
+  }).catch(error => console.error('There was a problem with the fetch operation:', error));
+
+  if (response && response.ok) {
+    const data = await response.json();
+    return data;
+  } else {
+    return "ERROR";
+  }
+
+}

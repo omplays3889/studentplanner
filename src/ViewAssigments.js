@@ -13,26 +13,33 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useContext } from 'react';
 import { AuthContext } from './AuthContext';
-import { obtainAssignmentsAPICall } from './API';
+import { obtainAssignmentsAPICall, deleteAssignmentAPICall } from './API';
 
 function ViewAssignments() {
 
   const { user} = useContext(AuthContext);
   const [data, setData] = useState([]);
+  const [deletedAssignments, setDeletedAssignments] = useState([]);
   const [classes, setClasses] = useState([]);
   const [counter, setCounter] = useState(0);
   const [selectedIndex, setSelectedIndex] = useState();
 
+  const saveChanges = async () => {
+    deletedAssignments.forEach(async (id) => {
+      await deleteAssignmentAPICall(user, id);
+    })
+    setDeletedAssignments([]);
+  }
+
   const handleDelete = (index) => {
-    console.log("deleting.." + index);
-    console.log("Selected index = "+selectedIndex);
+    deletedAssignments.push(data[index].id);
     data.splice(index, 1);
     setCounter(counter+1);
-    console.log("update state done");
   };
 
 
   const handleChange = (event) => {
+    fetchData();
     for (let i = 0; i < classes.length; i++) {
       if (classes[i] === event.target.value) {
         setSelectedIndex(i);
@@ -41,20 +48,22 @@ function ViewAssignments() {
     console.log(classes[selectedIndex]);
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await obtainAssignmentsAPICall(user);
-      const jsonData = response;
-      const jsonClasses = [];
-      for (let i = 0; i < jsonData.length; i++) {
-        if (jsonClasses.includes(jsonData[i].class_name) == false) {
-          jsonClasses.push(jsonData[i].class_name);
-        }
+  const fetchData = async () => {
+    const response = await obtainAssignmentsAPICall(user);
+    const jsonData = response;
+    const jsonClasses = [];
+    for (let i = 0; i < jsonData.length; i++) {
+      if (jsonClasses.includes(jsonData[i].class_name) == false) {
+        jsonClasses.push(jsonData[i].class_name);
       }
-      setClasses(jsonClasses);
-      setData(jsonData);
-      console.log(jsonData);
     }
+    setClasses(jsonClasses);
+    setData(jsonData);
+    setDeletedAssignments([]);
+    console.log(jsonData);
+  }
+
+  useEffect(() => {
     fetchData();
   }, []);
 
@@ -106,7 +115,7 @@ function ViewAssignments() {
             </List>
         </div>
         <div style={{ display: 'flex', flexDirection: 'row', marginTop: '20px' }}>
-          <Button variant="contained">Save Changes</Button>
+          <Button variant="contained" onClick={saveChanges}>Save Changes</Button>
         </div>
       </div>
     );
