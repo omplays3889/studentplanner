@@ -63,8 +63,9 @@ function ViewAssignments() {
       <div style={{ display: 'flex', flexDirection: 'column', width: '100%', overflowX: 'hidden', height: '100%' }}>
         <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '20px', width: '250px', marginTop:'10px'}}>
           <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-            <InputLabel id="demo-select-small-label">Class Name</InputLabel>
+            <InputLabel sx={{fontSize:'14px'}} id="demo-select-small-label">Class Name</InputLabel>
             <Select
+              sx={{fontSize:'14px'}}
               labelId="demo-select-small-label"
               id="demo-select-small"
               value={selectedIndex >= 0 ? classes[selectedIndex] : ""}
@@ -72,7 +73,7 @@ function ViewAssignments() {
               onChange={handleChange}
             >
               {classes.map(myClass => (
-                <MenuItem key={myClass} value={myClass}>
+                <MenuItem sx={{fontSize:'14px'}} key={myClass} value={myClass}>
                   {myClass}
                 </MenuItem>
               ))}
@@ -85,7 +86,7 @@ function ViewAssignments() {
           assignment.class_name === classes[selectedIndex] ?
            <ListItem key={index}
            secondaryAction={
-            assignment.owner_email_id === user.email ?
+            assignment.owner_email_id === user.email_id ?
              <IconButton edge="end" aria-label="delete">
                <DeleteIcon  onClick={() => handleDelete(index)}/>
              </IconButton>
@@ -93,6 +94,9 @@ function ViewAssignments() {
            }
          >
            <ListItemText
+           primaryTypographyProps={{
+            style: {fontSize: '14px'},
+              }}
              primary={assignment.duedate + " : " + assignment.title}
              secondary={assignment.details}
            />

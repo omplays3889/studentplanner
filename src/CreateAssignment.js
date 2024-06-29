@@ -18,16 +18,15 @@ import dayjs from 'dayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import {obtainClassesAPICall} from './API.js';
+import {obtainClassesAPICall, createAssignmentAPICall} from './API.js';
 import { useContext } from 'react';
 import { AuthContext } from './AuthContext';
 
 function CreateAssignment() {
 
   const [data, setData] = useState([]);
-  const [counter, setCounter] = useState(0);
   const [selectedIndex, setSelectedIndex] = useState();
-  const [selectedDateTime, setSelectedDateTime] = useState(dayjs('2022-04-17T15:30'));
+  const [selectedDateTime, setSelectedDateTime] = useState(dayjs('2024-12-01T15:30'));
   const [name, setName] = useState('');
   const [details, setDetails] = useState('');
   const { user } = useContext(AuthContext);
@@ -41,7 +40,11 @@ function CreateAssignment() {
     assignment_detail.details = details;
     assignment_detail.duedate = selectedDateTime;
 
-    alert(JSON.stringify(assignment_detail));
+    await createAssignmentAPICall(user, assignment_detail);
+    setSelectedDateTime(dayjs('2024-12-01T15:30'));
+    setName('');
+    setDetails('');
+    setSelectedIndex(-1);
   }
 
   const handleDateTimeChange = (newValue) => {
@@ -57,12 +60,12 @@ function CreateAssignment() {
     console.log(event.target.value);
   };
 
+  const fetchData = async () => {
+    const response = await obtainClassesAPICall(user);
+    setData(response);
+  }
+
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await obtainClassesAPICall(user);
-      setData(response);
-      console.log(response);
-    }
     fetchData();
   }, []);
 
@@ -74,8 +77,9 @@ function CreateAssignment() {
       <div style={{ display: 'flex', flexDirection: 'column', width: '100%', overflowX: 'hidden', height: '100%' }}>
         <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '20px', width: '250px', marginTop: '10px' }}>
           <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-            <InputLabel id="demo-select-small-label">Class Name</InputLabel>
+            <InputLabel sx={{fontSize:'14px'}} id="demo-select-small-label">Class Name</InputLabel>
             <Select
+              sx={{fontSize:'14px'}}
               labelId="demo-select-small-label"
               id="demo-select-small"
               value={selectedIndex >= 0 ? data[selectedIndex].class_name : ""}
@@ -83,7 +87,7 @@ function CreateAssignment() {
               onChange={handleChange}
             >
               {data.map(myClass => (
-                <MenuItem key={myClass.id} value={myClass.class_name}>
+                <MenuItem sx={{fontSize:'14px'}} key={myClass.id} value={myClass.class_name}>
                   {myClass.class_name}
                 </MenuItem>
               ))}
@@ -96,7 +100,16 @@ function CreateAssignment() {
             <DemoContainer size='small' components={['DateTimePicker', 'DateTimePicker']}>
               <DateTimePicker
                 label="Due Date"
-                slotProps={{ textField: { size: 'small' } }}
+                slotProps={{
+                  textField: {
+                    size: 'small', // don't need this anymore so feel free to remove
+                    sx: {
+                      '> .MuiOutlinedInput-root': {
+                        fontSize: "14px" // whatever height you want here
+                      }
+                    }
+                  }
+                }}
                 size='small'
                 value={selectedDateTime}
                 onChange={handleDateTimeChange}
@@ -110,6 +123,13 @@ function CreateAssignment() {
             label="Assignment Name"
             id="outlined-size-small"
             size="small"
+            value={name}
+            InputLabelProps={{
+              style: {fontSize: '14px'},
+             }}
+            inputProps={{
+              style: {fontSize: '14px'},
+             }}
             onChange={e => setName(e.target.value)}
           />
         </div>
@@ -120,6 +140,13 @@ function CreateAssignment() {
             label="Assignment Details"
             id="outlined-size-small"
             size="small"
+            value={details}
+            InputLabelProps={{
+              style: {fontSize: '14px'},
+             }}
+            inputProps={{
+              style: {fontSize: '14px'},
+             }}
             onChange={e => setDetails(e.target.value)}
           />
         </div>

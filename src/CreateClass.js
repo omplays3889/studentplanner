@@ -18,6 +18,9 @@ function CreateClass() {
     class_detail.class_name = name;
     class_detail.email_ids = emails;
     await createClassAPICall(user, class_detail);
+
+    setName('');
+    setEmails('');
   }
 
   return (
@@ -28,6 +31,13 @@ function CreateClass() {
           label="Class Name"
           id="outlined-size-small"
           size="small"
+          value={name}
+          InputLabelProps={{
+            style: {fontSize: '14px'},
+           }}
+          inputProps={{
+            style: {fontSize: '14px'},
+           }}
           onChange={e => setName(e.target.value)}
         />
       </div>
@@ -38,7 +48,15 @@ function CreateClass() {
           label="Student Email Whitelist"
           id="outlined-size-small"
           size="small"
+          value={emails}
           onChange={e => setEmails(e.target.value)}
+          helperText="Enter student emails seperated by coma"
+          InputLabelProps={{
+            style: {fontSize: '14px'},
+           }}
+          inputProps={{
+            style: {fontSize: '14px'},
+           }}
         />
       </div>
       <div style={{ display: 'flex', flexDirection: 'row', marginTop:'20px' }}>

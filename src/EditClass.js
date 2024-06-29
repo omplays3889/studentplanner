@@ -79,16 +79,17 @@ function EditClass() {
       <div style={{ display: 'flex', flexDirection: 'column', width: '100%', overflowX: 'hidden', height: '100%' }}>
         <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '20px', width: '250px', marginTop:'10px'}}>
           <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-            <InputLabel id="demo-select-small-label">Class Name</InputLabel>
+            <InputLabel sx={{fontSize:'14px'}} id="demo-select-small-label">Class Name</InputLabel>
             <Select
               labelId="demo-select-small-label"
               id="demo-select-small"
               value={selectedIndex >= 0 ? data[selectedIndex].class_name : ""}
               label="ClassName"
+              sx={{fontSize:'14px'}}
               onChange={handleChange}
             >
               {data.map(myClass => (
-                <MenuItem key={myClass.id} value={myClass.class_name}>
+                <MenuItem sx={{fontSize:'14px'}} key={myClass.id} value={myClass.class_name}>
                   {myClass.class_name}
                 </MenuItem>
               ))}
@@ -107,6 +108,9 @@ function EditClass() {
            }
          >
            <ListItemText
+           primaryTypographyProps={{
+            style: {fontSize: '14px'},
+              }}
              primary={option}
            />
          </ListItem>
@@ -124,6 +128,13 @@ function EditClass() {
           id="outlined-size-small"
           size="small"
           value={additionalEmails}
+          helperText="Enter student emails seperated by coma"
+          InputLabelProps={{
+            style: {fontSize: '14px'},
+           }}
+          inputProps={{
+            style: {fontSize: '14px'},
+           }}
           onChange={e => setAdditionalEmails(e.target.value)}
          />
         }
