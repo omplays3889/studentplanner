@@ -29,7 +29,7 @@ function CreateAssignment() {
   const [status, setStatusBase] = useState("");
 
   const createAssignment = async () => {
-    if (data[selectedIndex]?.class_name?.length > 0 && data[selectedIndex]?.id?.length > 0
+    if (data[selectedIndex]?.class_name?.length > 0 
       && name?.length > 0 && details?.length > 0) {
       let assignment_detail = {};
       assignment_detail.class_name = data[selectedIndex]?.class_name;
