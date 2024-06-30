@@ -24,8 +24,9 @@ function CreateClass() {
       await createClassAPICall(user, class_detail);
       setName('');
       setEmails('');
+      setStatusBase({type: "info", msg: "Class successfully created.", key: Math.random() });
     } else {
-      setStatusBase({ msg: "Class Name and Students Emails are mandatory fields.", key: Math.random() });
+      setStatusBase({type: "error", msg: "Class Name and Students Emails are mandatory fields.", key: Math.random() });
     }
   }
 
@@ -76,7 +77,7 @@ function CreateClass() {
       <div style={{ display: 'flex', flexDirection: 'row', marginTop:'20px' }}>
       <Button variant="contained" onClick={createClass}>Create Class</Button>
       </div>
-      {status ? <AlertMassage key={status.key} message={status.msg} /> : null}
+      {status ? <AlertMassage key={status.key} message={status.msg} type={status.type}/> : null}
     </div>
   );
 }

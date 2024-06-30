@@ -44,8 +44,9 @@ function CreateAssignment() {
       setName('');
       setDetails('');
       setSelectedIndex(-1);
+      setStatusBase({type: "info", msg: "Assignment successfully created.", key: Math.random() });
     } else {
-      setStatusBase({ msg: "Class Name, Assignment Name and Assignment Details are mandatory fields.", key: Math.random() });
+      setStatusBase({type: "error", msg: "Class Name, Assignment Name and Assignment Details are mandatory fields.", key: Math.random() });
     }
   }
 
@@ -152,10 +153,10 @@ function CreateAssignment() {
             onChange={e => setDetails(e.target.value)}
           />
         </div>
-        <div style={{ display: 'flex', flexDirection: 'row', marginTop: '20px' }}>
+        <div style={{ display: 'flex', flexDirection: 'row', marginTop: '20px', marginLeft:'10px' }}>
           <Button variant="contained" onClick={createAssignment}>Create Assignment</Button>
         </div>
-        {status ? <AlertMassage key={status.key} message={status.msg} /> : null}
+        {status ? <AlertMassage key={status.key} message={status.msg} type={status.type} /> : null}
       </div>
     );
   } else {

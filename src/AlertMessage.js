@@ -3,7 +3,7 @@ import Snackbar from "@mui/material/Snackbar";
 import IconButton from "@mui/material/IconButton";
 import Alert from '@mui/material/Alert';
 
-export default function AlertMassage({ message }) {
+export default function AlertMassage({ message, type }) {
   const [open, setOpen] = React.useState(true);
   function handleClose(event, reason) {
     if (reason === "clickaway") {
@@ -33,7 +33,7 @@ export default function AlertMassage({ message }) {
           </IconButton>
         ]}
       >
-        <Alert onClose={() => setOpen(false)} severity="error" sx={{ width: '100%' }}>
+        <Alert onClose={() => setOpen(false)} severity={type} sx={{ width: '100%' }}>
             {message}
         </Alert>
       </Snackbar>

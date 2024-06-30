@@ -16,6 +16,7 @@ import { obtainClassesAPICall } from './API';
 import { useContext } from 'react';
 import { AuthContext } from './AuthContext';
 import {updateClassAPICall} from './API.js';
+import AlertMassage from './AlertMessage.js';
 
 function EditClass() {
 
@@ -25,6 +26,7 @@ function EditClass() {
   const [counter, setCounter] = useState(0);
   const [selectedIndex, setSelectedIndex] = useState();
   const { user } = useContext(AuthContext);
+  const [status, setStatusBase] = useState("");
 
   const saveClass = async () => {
     if(selectedIndex >= 0) {
@@ -35,6 +37,7 @@ function EditClass() {
       await updateClassAPICall(user,class_detail);
       setCounter(counter+1);
       await fetchData();
+      setStatusBase({type: "info", msg: "Class successfully saved.", key: Math.random() });
     }
   }
 
@@ -142,6 +145,7 @@ function EditClass() {
         <div style={{ display: 'flex', flexDirection: 'row', marginTop: '20px' }}>
           <Button variant="contained" onClick={saveClass}>Save Class</Button>
         </div>
+        {status ? <AlertMassage key={status.key} message={status.msg} type={status.type}/> : null}
       </div>
     );
   } else {

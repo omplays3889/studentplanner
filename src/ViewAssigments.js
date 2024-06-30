@@ -14,6 +14,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { useContext } from 'react';
 import { AuthContext } from './AuthContext';
 import { obtainAssignmentsAPICall, deleteAssignmentAPICall } from './API';
+import AlertMassage from './AlertMessage.js';
 
 function ViewAssignments() {
 
@@ -23,12 +24,14 @@ function ViewAssignments() {
   const [classes, setClasses] = useState([]);
   const [counter, setCounter] = useState(0);
   const [selectedIndex, setSelectedIndex] = useState();
+  const [status, setStatusBase] = useState("");
 
   const saveChanges = async () => {
     deletedAssignments.forEach(async (id) => {
       await deleteAssignmentAPICall(user, id);
     })
     setDeletedAssignments([]);
+    setStatusBase({type: "info", msg: "Assignments successfully saved.", key: Math.random() });
   }
 
   const handleDelete = (index) => {
@@ -117,6 +120,7 @@ function ViewAssignments() {
         <div style={{ display: 'flex', flexDirection: 'row', marginTop: '20px' }}>
           <Button variant="contained" onClick={saveChanges}>Save Changes</Button>
         </div>
+        {status ? <AlertMassage key={status.key} message={status.msg} type={status.type} /> : null}
       </div>
     );
   } else {
