@@ -7,20 +7,16 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import IconButton from '@mui/material/IconButton';
-import DeleteIcon from '@mui/icons-material/Delete';
 import TextField from '@mui/material/TextField';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import dayjs from 'dayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import {obtainClassesAPICall, createAssignmentAPICall} from './API.js';
+import { obtainClassesAPICall, createAssignmentAPICall } from './API.js';
 import { useContext } from 'react';
 import { AuthContext } from './AuthContext';
+import AlertMassage from './AlertMessage.js';
 
 function CreateAssignment() {
 
@@ -30,21 +26,27 @@ function CreateAssignment() {
   const [name, setName] = useState('');
   const [details, setDetails] = useState('');
   const { user } = useContext(AuthContext);
+  const [status, setStatusBase] = useState("");
 
   const createAssignment = async () => {
-    let assignment_detail = {};
-    assignment_detail.class_name = data[selectedIndex]?.class_name;
-    assignment_detail.class_id = data[selectedIndex]?.id;
+    if (data[selectedIndex]?.class_name?.length > 0 && data[selectedIndex]?.id?.length > 0
+      && name?.length > 0 && details?.length > 0) {
+      let assignment_detail = {};
+      assignment_detail.class_name = data[selectedIndex]?.class_name;
+      assignment_detail.class_id = data[selectedIndex]?.id;
 
-    assignment_detail.title = name;
-    assignment_detail.details = details;
-    assignment_detail.duedate = selectedDateTime;
+      assignment_detail.title = name;
+      assignment_detail.details = details;
+      assignment_detail.duedate = selectedDateTime;
 
-    await createAssignmentAPICall(user, assignment_detail);
-    setSelectedDateTime(dayjs('2024-12-01T15:30'));
-    setName('');
-    setDetails('');
-    setSelectedIndex(-1);
+      await createAssignmentAPICall(user, assignment_detail);
+      setSelectedDateTime(dayjs('2024-12-01T15:30'));
+      setName('');
+      setDetails('');
+      setSelectedIndex(-1);
+    } else {
+      setStatusBase({ msg: "Class Name, Assignment Name and Assignment Details are mandatory fields.", key: Math.random() });
+    }
   }
 
   const handleDateTimeChange = (newValue) => {
@@ -77,9 +79,9 @@ function CreateAssignment() {
       <div style={{ display: 'flex', flexDirection: 'column', width: '100%', overflowX: 'hidden', height: '100%' }}>
         <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '20px', width: '250px', marginTop: '10px' }}>
           <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-            <InputLabel sx={{fontSize:'14px'}} id="demo-select-small-label">Class Name</InputLabel>
+            <InputLabel sx={{ fontSize: '14px' }} id="demo-select-small-label">Class Name</InputLabel>
             <Select
-              sx={{fontSize:'14px'}}
+              sx={{ fontSize: '14px' }}
               labelId="demo-select-small-label"
               id="demo-select-small"
               value={selectedIndex >= 0 ? data[selectedIndex].class_name : ""}
@@ -87,7 +89,7 @@ function CreateAssignment() {
               onChange={handleChange}
             >
               {data.map(myClass => (
-                <MenuItem sx={{fontSize:'14px'}} key={myClass.id} value={myClass.class_name}>
+                <MenuItem sx={{ fontSize: '14px' }} key={myClass.id} value={myClass.class_name}>
                   {myClass.class_name}
                 </MenuItem>
               ))}
@@ -95,7 +97,7 @@ function CreateAssignment() {
           </FormControl>
 
         </div>
-        <div style={{marginLeft: '10px' , width: '275px'}}>
+        <div style={{ marginLeft: '10px', width: '275px' }}>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DemoContainer size='small' components={['DateTimePicker', 'DateTimePicker']}>
               <DateTimePicker
@@ -125,34 +127,35 @@ function CreateAssignment() {
             size="small"
             value={name}
             InputLabelProps={{
-              style: {fontSize: '14px'},
-             }}
+              style: { fontSize: '14px' },
+            }}
             inputProps={{
-              style: {fontSize: '14px'},
-             }}
+              style: { fontSize: '14px' },
+            }}
             onChange={e => setName(e.target.value)}
           />
         </div>
         <div style={{ display: 'flex', flexDirection: 'row', marginTop: '20px', marginLeft: '10px' }}>
           <TextField
             multiline
-            style={{ width: '450px' }}
+            style={{ width: '450px', minHeight: '6em'  }}
             label="Assignment Details"
             id="outlined-size-small"
             size="small"
             value={details}
             InputLabelProps={{
-              style: {fontSize: '14px'},
-             }}
+              style: { fontSize: '14px' },
+            }}
             inputProps={{
-              style: {fontSize: '14px'},
-             }}
+              style: { fontSize: '14px' , minHeight: '250px'},
+            }}
             onChange={e => setDetails(e.target.value)}
           />
         </div>
         <div style={{ display: 'flex', flexDirection: 'row', marginTop: '20px' }}>
           <Button variant="contained" onClick={createAssignment}>Create Assignment</Button>
         </div>
+        {status ? <AlertMassage key={status.key} message={status.msg} /> : null}
       </div>
     );
   } else {

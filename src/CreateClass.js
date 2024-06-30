@@ -5,22 +5,28 @@ import TextField from '@mui/material/TextField';
 import { useState } from 'react';
 import { useContext } from 'react';
 import { AuthContext } from './AuthContext';
+import Alert from '@mui/material/Alert';
 import {createClassAPICall} from './API.js';
+import AlertMassage from './AlertMessage.js';
 
 function CreateClass() {
 
   const [name, setName] = useState('');
   const [emails, setEmails] = useState('');
   const {user} = useContext(AuthContext);
+  const [status, setStatusBase] = useState("");
 
   const createClass = async () => {
-    let class_detail = {};
-    class_detail.class_name = name;
-    class_detail.email_ids = emails;
-    await createClassAPICall(user, class_detail);
-
-    setName('');
-    setEmails('');
+    if(name && name.length > 0 && emails && emails.length > 0) {
+      let class_detail = {};
+      class_detail.class_name = name;
+      class_detail.email_ids = emails;
+      await createClassAPICall(user, class_detail);
+      setName('');
+      setEmails('');
+    } else {
+      setStatusBase({ msg: "Class Name and Students Emails are mandatory fields.", key: Math.random() });
+    }
   }
 
   return (
@@ -45,23 +51,24 @@ function CreateClass() {
       <TextField
           multiline
           style={{width:'450px'}}
-          label="Student Email Whitelist"
+          label="Students Emails Whitelist"
           id="outlined-size-small"
           size="small"
           value={emails}
           onChange={e => setEmails(e.target.value)}
-          helperText="Enter student emails seperated by coma"
+          helperText="Enter students emails seperated by coma"
           InputLabelProps={{
             style: {fontSize: '14px'},
            }}
           inputProps={{
-            style: {fontSize: '14px'},
+            style: {fontSize: '14px', minHeight: '150px'},
            }}
         />
       </div>
       <div style={{ display: 'flex', flexDirection: 'row', marginTop:'20px' }}>
       <Button variant="contained" onClick={createClass}>Create Class</Button>
       </div>
+      {status ? <AlertMassage key={status.key} message={status.msg} /> : null}
     </div>
   );
 }

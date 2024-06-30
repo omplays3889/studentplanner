@@ -99,7 +99,7 @@ function EditClass() {
         <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '20px', width: '400px'}}>
         <List>
         { selectedIndex >= 0 && emails && emails.map((option, index)=> (
-          option && option.length > 0 ?
+          option && option.trim().length > 0 ?
            <ListItem key={index}
            secondaryAction={
              <IconButton edge="end" aria-label="delete">
@@ -123,8 +123,8 @@ function EditClass() {
         { data[selectedIndex] && 
         <TextField
           multiline
-          style={{width:'400px'}}
-          label="Additional Student Email Whitelist"
+          style={{width:'450px'}}
+          label="Additional Students Emails Whitelist"
           id="outlined-size-small"
           size="small"
           value={additionalEmails}
@@ -133,7 +133,7 @@ function EditClass() {
             style: {fontSize: '14px'},
            }}
           inputProps={{
-            style: {fontSize: '14px'},
+            style: {fontSize: '14px', minHeight: '150px'},
            }}
           onChange={e => setAdditionalEmails(e.target.value)}
          />
