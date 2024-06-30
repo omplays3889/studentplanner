@@ -147,7 +147,7 @@ function CreateAssignment() {
               style: { fontSize: '14px' },
             }}
             inputProps={{
-              style: { fontSize: '14px' , minHeight: '250px'},
+              style: { fontSize: '14px' , minHeight: '150px'},
             }}
             onChange={e => setDetails(e.target.value)}
           />
