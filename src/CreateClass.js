@@ -17,10 +17,10 @@ function CreateClass() {
   const [status, setStatusBase] = useState("");
 
   const createClass = async () => {
-    if(name && name.length > 0 && emails && emails.length > 0) {
+    if(name && name.length > 0 && emails && cleanEmails(emails).length > 0) {
       let class_detail = {};
       class_detail.class_name = name;
-      class_detail.email_ids = emails;
+      class_detail.email_ids = cleanEmails(emails);
       await createClassAPICall(user, class_detail);
       setName('');
       setEmails('');
@@ -28,6 +28,14 @@ function CreateClass() {
       setStatusBase({ msg: "Class Name and Students Emails are mandatory fields.", key: Math.random() });
     }
   }
+
+  const cleanEmails = (emailString) => {
+    return emailString
+      .split(',') // Split the string by commas
+      .map(email => email.trim()) // Trim any leading/trailing whitespace from each part
+      .filter(email => email !== '') // Filter out any empty strings
+      .join(', '); // Join the parts back together with a single comma and space
+  };
 
   return (
 
