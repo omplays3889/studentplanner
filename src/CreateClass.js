@@ -51,6 +51,7 @@ function CreateClass() {
             style: {fontSize: '14px'},
            }}
           inputProps={{
+            maxLength: 254,
             style: {fontSize: '14px'},
            }}
           onChange={e => setName(e.target.value)}
@@ -65,11 +66,12 @@ function CreateClass() {
           size="small"
           value={emails}
           onChange={e => setEmails(e.target.value)}
-          helperText="Enter students emails seperated by coma"
+          helperText="Enter students emails seperated by a coma"
           InputLabelProps={{
             style: {fontSize: '14px'},
            }}
           inputProps={{
+            maxLength: 7999,
             style: {fontSize: '14px', minHeight: '150px'},
            }}
         />

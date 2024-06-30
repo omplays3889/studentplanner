@@ -1,7 +1,7 @@
 
 import './App.css';
 import { React, useState, useEffect } from 'react';
-import { Button } from '@mui/material';
+import { Button,  FormHelperText} from '@mui/material';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
@@ -15,6 +15,7 @@ import { useContext } from 'react';
 import { AuthContext } from './AuthContext';
 import { obtainAssignmentsAPICall, deleteAssignmentAPICall } from './API';
 import AlertMassage from './AlertMessage.js';
+import {Divider, Box} from '@mui/material';
 
 function ViewAssignments() {
 
@@ -93,9 +94,12 @@ function ViewAssignments() {
           </FormControl>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '20px', width: '500px'}}>
+        <FormHelperText style={{marginLeft:'12px'}}>Classes with at least one assignment are shown in the drop down.</FormHelperText>
         <List>
         { data && data.map((assignment, index)=> (
           assignment.class_name === classes[selectedIndex] ?
+          <div>
+          <div style={{  marginLeft:'14px', fontSize:'12px', color:'darkblue', alignContent:'right'}}>{assignment.duedate}</div>
            <ListItem key={index}
            secondaryAction={
             assignment.owner_email_id === user.email_id ?
@@ -109,10 +113,14 @@ function ViewAssignments() {
            primaryTypographyProps={{
             style: {fontSize: '14px'},
               }}
-             primary={assignment.duedate + " : " + assignment.title}
+             primary={assignment.title}
              secondary={assignment.details}
            />
-         </ListItem> : <></>
+         </ListItem>
+         <Box my={1}>
+                  <Divider />
+                </Box>
+          </div> : <></>
           )) }
              
             </List>

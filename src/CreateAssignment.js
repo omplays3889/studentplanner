@@ -131,6 +131,7 @@ function CreateAssignment() {
               style: { fontSize: '14px' },
             }}
             inputProps={{
+              maxLength: 254,
               style: { fontSize: '14px' },
             }}
             onChange={e => setName(e.target.value)}
@@ -148,6 +149,7 @@ function CreateAssignment() {
               style: { fontSize: '14px' },
             }}
             inputProps={{
+              maxLength: 3500,
               style: { fontSize: '14px' , minHeight: '150px'},
             }}
             onChange={e => setDetails(e.target.value)}

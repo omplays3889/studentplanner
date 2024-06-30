@@ -30,14 +30,23 @@ function EditClass() {
 
   const saveClass = async () => {
     if(selectedIndex >= 0) {
-      let class_detail = {};
-      class_detail.class_id = data[selectedIndex].id;
-      class_detail.class_name = data[selectedIndex].class_name;
-      class_detail.email_ids = cleanEmails(emails.join(',')+','+additionalEmails);
-      await updateClassAPICall(user,class_detail);
-      setCounter(counter+1);
-      await fetchData();
-      setStatusBase({type: "info", msg: "Class successfully saved.", key: Math.random() });
+      let refinedEmails = cleanEmails(emails.join(',')+','+additionalEmails);
+      if(refinedEmails.length > 0) {
+        if(refinedEmails.length < 7999) {
+          let class_detail = {};
+          class_detail.class_id = data[selectedIndex].id;
+          class_detail.class_name = data[selectedIndex].class_name;
+          class_detail.email_ids = refinedEmails;
+          await updateClassAPICall(user,class_detail);
+          setCounter(counter+1);
+          await fetchData();
+          setStatusBase({type: "info", msg: "Class successfully saved.", key: Math.random() });
+        } else {
+          setStatusBase({type: "error", msg: "Total chars in emails list exceeded 8000 chars.", key: Math.random() });
+        }
+      } else {
+        setStatusBase({type: "error", msg: "Your class does not have any email.", key: Math.random() });
+      }
     }
   }
 
