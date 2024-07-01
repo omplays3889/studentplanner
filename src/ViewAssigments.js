@@ -99,7 +99,7 @@ function ViewAssignments() {
         { data && data.map((assignment, index)=> (
           assignment.class_name === classes[selectedIndex] ?
           <div>
-          <div style={{  marginLeft:'14px', fontSize:'12px', color:'darkblue', alignContent:'right'}}>{assignment.duedate}</div>
+          <div style={{  marginLeft:'14px', fontSize:'14px', color:'coral', fontWeight:'bold'}}>{assignment.duedate}</div>
            <ListItem key={index}
            secondaryAction={
             assignment.owner_email_id === user.email_id ?
