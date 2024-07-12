@@ -25,11 +25,12 @@ function Intropage() {
             Here is how it works...
           </p>
           <p>
-            Teachers create assignments for the class.
-            Students see list of teachers from their school, they subscribe to their teachers FEED, and All Done !!
+            Teachers create classes enrolling their students with students email addresses.
+            Teachers then can create assignments for any class they created through out the school year.
           </p>
           <p>
-            Students will receive emails when any new assignment is created by their subscribed teachers.
+            Students can login and see list of their assignments per class they are enrolled in.
+            Students can also create personal assignment for them selves.
           </p>
           <p>
             Not Only That...
