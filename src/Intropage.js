@@ -42,7 +42,7 @@ function Intropage() {
           </p>
           <label>
                Don't wait, ask your school to onboard with our platform.
-               Reach out to onboarding@studentplanner.me
+               Reach out to onboarding@students-planner.com
             </label>
         </div>
         <div style={{width: '50%', height: '80%'}}>

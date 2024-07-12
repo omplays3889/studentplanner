@@ -18,11 +18,17 @@ import { useContext } from 'react';
 import { AuthContext } from './AuthContext';
 import AlertMassage from './AlertMessage.js';
 
+const timezone = require('dayjs/plugin/timezone')
+const utc = require('dayjs/plugin/utc')
+
+dayjs.extend(utc)
+dayjs.extend(timezone)
+
 function CreateAssignment() {
 
   const [data, setData] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState();
-  const [selectedDateTime, setSelectedDateTime] = useState(dayjs('2024-12-01T15:30'));
+  const [selectedDateTime, setSelectedDateTime] =  useState(dayjs().tz('America/Los_Angeles'));
   const [name, setName] = useState('');
   const [details, setDetails] = useState('');
   const { user } = useContext(AuthContext);
@@ -37,10 +43,10 @@ function CreateAssignment() {
 
       assignment_detail.title = name;
       assignment_detail.details = details;
-      assignment_detail.duedate = selectedDateTime;
+      assignment_detail.duedate = selectedDateTime.format();
 
       await createAssignmentAPICall(user, assignment_detail);
-      setSelectedDateTime(dayjs('2024-12-01T15:30'));
+      setSelectedDateTime(dayjs().tz('America/Los_Angeles'));
       setName('');
       setDetails('');
       setSelectedIndex(-1);

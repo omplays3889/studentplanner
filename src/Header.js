@@ -26,7 +26,7 @@ function Header() {
 
     <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '3px solid transparent', borderImage: `linear-gradient(to right,lightBlue, blue)`, borderImageSlice: '1' }}>
       <div>
-        <h1 style={{ color: '#1564FF', paddingLeft: '20px' }}>Student Planner</h1>
+        <h1 style={{ color: '#1564FF', paddingLeft: '20px' }}>Students Planner</h1>
       </div>
       <div style={{ marginTop: '25px', paddingRight: '20px' }}>
         {!user ?
