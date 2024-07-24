@@ -99,7 +99,17 @@ function ViewAssignments() {
         { data && data.map((assignment, index)=> (
           assignment.class_name === classes[selectedIndex] ?
           <div>
-          <div style={{  marginLeft:'14px', fontSize:'14px', color:'coral', fontWeight:'bold'}}>{assignment.duedate}</div>
+          <div style={{  marginLeft:'14px', fontSize:'14px', color:'coral', fontWeight:'bold'}}>
+          {new Date(assignment.duedate).toLocaleString('en-US', {
+            timeZone: 'America/Los_Angeles',  // Specify PST time zone
+            year: 'numeric',                  // Display full year
+            month: 'short',                   // Display abbreviated month name (e.g., Jan, Feb, etc.)
+            day: 'numeric',                   // Display day of the month
+            hour: 'numeric',                  // Display hours in 12-hour format
+            minute: 'numeric',                // Display minutes
+            hour12: true                      // Use AM/PM
+          })}
+          </div>
            <ListItem key={index}
            secondaryAction={
             assignment.owner_email_id === user.email_id ?
