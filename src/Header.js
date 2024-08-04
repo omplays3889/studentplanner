@@ -11,10 +11,8 @@ function Header() {
 
   const onSuccess = (response) => {
     var decodedHeader = jwtDecode(response.credential);
-    console.log(decodedHeader);
 
     const { name, email } = decodedHeader;
-    console.log(name + email);
 
     signIn(decodedHeader);
   };

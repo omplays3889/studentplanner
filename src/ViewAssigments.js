@@ -45,26 +45,30 @@ function ViewAssignments() {
   const handleChange = (event) => {
     fetchData();
     for (let i = 0; i < classes.length; i++) {
-      if (classes[i] === event.target.value) {
+      if (classes[i].id === event.target.value) {
         setSelectedIndex(i);
       }
     }
-    console.log(classes[selectedIndex]);
   };
 
   const fetchData = async () => {
     const response = await obtainAssignmentsAPICall(user);
     const jsonData = response;
     const jsonClasses = [];
+    const jsonIds = [];
     for (let i = 0; i < jsonData.length; i++) {
-      if (jsonClasses.includes(jsonData[i].class_name) == false) {
-        jsonClasses.push(jsonData[i].class_name);
+      if (jsonIds.includes(jsonData[i].class_id) == false) {
+        jsonIds.push(jsonData[i].class_id);
+        let jsonClass = {
+          id: jsonData[i].class_id,
+          name: jsonData[i].class_name
+        }
+        jsonClasses.push(jsonClass);
       }
     }
     setClasses(jsonClasses);
     setData(jsonData);
     setDeletedAssignments([]);
-    console.log(jsonData);
   }
 
   useEffect(() => {
@@ -81,13 +85,13 @@ function ViewAssignments() {
               sx={{fontSize:'14px'}}
               labelId="demo-select-small-label"
               id="demo-select-small"
-              value={selectedIndex >= 0 ? classes[selectedIndex] : ""}
+              value={selectedIndex >= 0 ? classes[selectedIndex].id : ""}
               label="ClassName"
               onChange={handleChange}
             >
               {classes.map(myClass => (
-                <MenuItem sx={{fontSize:'14px'}} key={myClass} value={myClass}>
-                  {myClass}
+                <MenuItem sx={{fontSize:'14px'}} key={myClass.id} value={myClass.id}>
+                  {myClass.name}
                 </MenuItem>
               ))}
             </Select>
@@ -96,8 +100,8 @@ function ViewAssignments() {
         <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '20px', width: '500px'}}>
         <FormHelperText style={{marginLeft:'12px'}}>Classes with at least one assignment are shown in the drop down.</FormHelperText>
         <List>
-        { data && data.map((assignment, index)=> (
-          assignment.class_name === classes[selectedIndex] ?
+        { data && selectedIndex>=0 && data.map((assignment, index)=> (
+          assignment.class_id === classes[selectedIndex].id ?
           <div>
           <div style={{  marginLeft:'14px', fontSize:'14px', color:'coral', fontWeight:'bold'}}>
           {new Date(assignment.duedate).toLocaleString('en-US', {

@@ -62,11 +62,10 @@ function CreateAssignment() {
 
   const handleChange = (event) => {
     for (let i = 0; i < data.length; i++) {
-      if (data[i].class_name === event.target.value) {
+      if (data[i].id === event.target.value) {
         setSelectedIndex(i);
       }
     }
-    console.log(event.target.value);
   };
 
   const fetchData = async () => {
@@ -91,12 +90,12 @@ function CreateAssignment() {
               sx={{ fontSize: '14px' }}
               labelId="demo-select-small-label"
               id="demo-select-small"
-              value={selectedIndex >= 0 ? data[selectedIndex].class_name : ""}
+              value={selectedIndex >= 0 ? data[selectedIndex].id : ""}
               label="ClassName"
               onChange={handleChange}
             >
               {data.map(myClass => (
-                <MenuItem sx={{ fontSize: '14px' }} key={myClass.id} value={myClass.class_name}>
+                <MenuItem sx={{ fontSize: '14px' }} key={myClass.id} value={myClass.id}>
                   {myClass.class_name}
                 </MenuItem>
               ))}
