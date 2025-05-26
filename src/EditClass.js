@@ -96,7 +96,7 @@ function EditClass() {
       <div style={{ display: 'flex', flexDirection: 'column', width: '100%', overflowX: 'hidden', height: '100%' }}>
         <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '20px', width: '250px', marginTop: '10px' }}>
           <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-            <InputLabel sx={{ fontSize: '14px' }} id="demo-select-small-label">Class Name</InputLabel>
+            <InputLabel sx={{ fontSize: '14px' }} id="demo-select-small-label">Group Name</InputLabel>
             <Select
               labelId="demo-select-small-label"
               id="demo-select-small"

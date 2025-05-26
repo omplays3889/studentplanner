@@ -30,9 +30,12 @@ function Header() {
         {!user ?
           <GoogleLogin onSuccess={onSuccess} onError={onError} />
           :
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div style={{ color: '#1564FF', paddingRight: '20px', fontWeight:'bold' }}>{user.email_id}</div>
           <Button variant="contained" sx={{ bgcolor: '#1564FF', marginLeft: '5px' }} size="medium" onClick={signOut}>
             Log Out
-          </Button>}
+          </Button>
+          </div>}
       </div>
     </div>
 

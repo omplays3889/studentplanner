@@ -28,7 +28,7 @@ function CreateAssignment() {
 
   const [data, setData] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState();
-  const [selectedDateTime, setSelectedDateTime] =  useState(dayjs().tz('America/Los_Angeles'));
+  const [selectedDateTime, setSelectedDateTime] =  useState();
   const [name, setName] = useState('');
   const [details, setDetails] = useState('');
   const { user } = useContext(AuthContext);
@@ -52,7 +52,7 @@ function CreateAssignment() {
       setSelectedIndex(-1);
       setStatusBase({type: "info", msg: "Assignment successfully created.", key: Math.random() });
     } else {
-      setStatusBase({type: "error", msg: "Class Name, Assignment Name and Assignment Details are mandatory fields.", key: Math.random() });
+      setStatusBase({type: "error", msg: "Group Name, Assignment Name and Assignment Details are mandatory fields.", key: Math.random() });
     }
   }
 
@@ -83,9 +83,9 @@ function CreateAssignment() {
   if (data) {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', width: '100%', overflowX: 'hidden', height: '100%' }}>
-        <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '20px', width: '250px', marginTop: '10px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '5px', width: '250px', marginTop: '10px' }}>
           <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-            <InputLabel sx={{ fontSize: '14px' }} id="demo-select-small-label">Class Name</InputLabel>
+            <InputLabel sx={{ fontSize: '14px' }} id="demo-select-small-label">Group Name</InputLabel>
             <Select
               sx={{ fontSize: '14px' }}
               labelId="demo-select-small-label"
@@ -114,6 +114,9 @@ function CreateAssignment() {
                     sx: {
                       '> .MuiOutlinedInput-root': {
                         fontSize: "14px" // whatever height you want here
+                      },
+                      '& label': {
+                        fontSize: '14px', // Label font size
                       }
                     }
                   }

@@ -13,7 +13,7 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useContext } from 'react';
 import { AuthContext } from './AuthContext';
-import { obtainAssignmentsAPICall, deleteAssignmentAPICall } from './API';
+import { obtainAssignmentsAPICall, deleteAssignmentAPICall, obtainClassesAPICall } from './API';
 import AlertMassage from './AlertMessage.js';
 import {Divider, Box} from '@mui/material';
 
@@ -23,9 +23,12 @@ function ViewAssignments() {
   const [data, setData] = useState([]);
   const [deletedAssignments, setDeletedAssignments] = useState([]);
   const [classes, setClasses] = useState([]);
+  const [assignmentClasses, setAssignmentClasses] = useState([]);
+  const [assignmentsExists, setAssignmentsExists] = useState(false);
   const [counter, setCounter] = useState(0);
   const [selectedIndex, setSelectedIndex] = useState();
   const [status, setStatusBase] = useState("");
+
 
   const saveChanges = async () => {
     deletedAssignments.forEach(async (id) => {
@@ -47,6 +50,11 @@ function ViewAssignments() {
     for (let i = 0; i < classes.length; i++) {
       if (classes[i].id === event.target.value) {
         setSelectedIndex(i);
+        assignmentClasses.map(cls =>  {if(cls.id == classes[i].id) {
+          setAssignmentsExists(true);
+        }
+      });
+
       }
     }
   };
@@ -66,7 +74,10 @@ function ViewAssignments() {
         jsonClasses.push(jsonClass);
       }
     }
-    setClasses(jsonClasses);
+
+    const classesResponse = await obtainClassesAPICall(user);
+    setClasses(classesResponse);
+    setAssignmentClasses(jsonClasses);
     setData(jsonData);
     setDeletedAssignments([]);
   }
@@ -75,12 +86,12 @@ function ViewAssignments() {
     fetchData();
   }, []);
 
-  if (data) {
+  if (data && classes) {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', width: '100%', overflowX: 'hidden', height: '100%' }}>
         <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '20px', width: '250px', marginTop:'10px'}}>
           <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-            <InputLabel sx={{fontSize:'14px'}} id="demo-select-small-label">Class Name</InputLabel>
+            <InputLabel sx={{fontSize:'14px'}} id="demo-select-small-label">Group Name</InputLabel>
             <Select
               sx={{fontSize:'14px'}}
               labelId="demo-select-small-label"
@@ -91,17 +102,21 @@ function ViewAssignments() {
             >
               {classes.map(myClass => (
                 <MenuItem sx={{fontSize:'14px'}} key={myClass.id} value={myClass.id}>
-                  {myClass.name}
+                  {myClass.class_name}
                 </MenuItem>
               ))}
             </Select>
           </FormControl>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '20px', width: '500px'}}>
-        <FormHelperText style={{marginLeft:'12px'}}>Classes with at least one assignment are shown in the drop down.</FormHelperText>
+        {!assignmentsExists && (
+          <FormHelperText style={{ marginLeft: '12px' }}>
+              No assignment exists for the selected Group.
+          </FormHelperText>
+        )}
         <List>
         { data && selectedIndex>=0 && data.map((assignment, index)=> (
-          assignment.class_id === classes[selectedIndex].id ?
+          assignment.class_id == classes[selectedIndex].id ?
           <div>
           <div style={{  marginLeft:'14px', fontSize:'14px', color:'coral', fontWeight:'bold'}}>
           {new Date(assignment.duedate).toLocaleString('en-US', {

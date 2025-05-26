@@ -48,7 +48,7 @@ function a11yProps(index) {
 }
 
 export function BasicTabs() {
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState(2);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -58,8 +58,8 @@ export function BasicTabs() {
     <Box sx={{ width: '100%'}}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="Create Class" {...a11yProps(0)} />
-          <Tab label="Edit Class" {...a11yProps(1)} />
+          <Tab label="Create Group" {...a11yProps(0)} />
+          <Tab label="Edit Group" {...a11yProps(1)} />
           <Tab label="Create Assignment" {...a11yProps(2)} />
           <Tab label="View Assignments" {...a11yProps(3)} />
         </Tabs>

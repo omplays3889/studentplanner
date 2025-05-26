@@ -28,9 +28,9 @@ function CreateClass() {
       await createClassAPICall(user, class_detail);
       setName('');
       setEmails('');
-      setStatusBase({ type: "info", msg: "Class successfully created.", key: Math.random() });
+      setStatusBase({ type: "info", msg: "Group successfully created.", key: Math.random() });
     } else {
-      setStatusBase({ type: "error", msg: "Class Name or Students Emails are not valid.", key: Math.random() });
+      setStatusBase({ type: "error", msg: "Group Name or Students Emails are not valid.", key: Math.random() });
     }
   }
 
@@ -39,7 +39,7 @@ function CreateClass() {
     <div style={{ display: 'flex', flexDirection: 'column', width: '100%', overflowX: 'hidden', height: '100%' }}>
       <div style={{ display: 'flex', flexDirection: 'row', marginTop: '20px' }}>
         <TextField
-          label="Class Name"
+          label="Group Name"
           id="outlined-size-small"
           size="small"
           value={name}
@@ -73,7 +73,7 @@ function CreateClass() {
         />
       </div>
       <div style={{ display: 'flex', flexDirection: 'row', marginTop: '20px' }}>
-        <Button variant="contained" onClick={createClass}>Create Class</Button>
+        <Button variant="contained" onClick={createClass}>Create Group</Button>
       </div>
       {status ? <AlertMassage key={status.key} message={status.msg} type={status.type} /> : null}
     </div>
