@@ -17,6 +17,8 @@ import { obtainAssignmentsAPICall, deleteAssignmentAPICall, obtainClassesAPICall
 import AlertMassage from './AlertMessage.js';
 import {Divider, Box} from '@mui/material';
 
+const { DateTime } = require("luxon");
+
 function ViewAssignments() {
 
   const { user} = useContext(AuthContext);
@@ -29,6 +31,24 @@ function ViewAssignments() {
   const [selectedIndex, setSelectedIndex] = useState();
   const [status, setStatusBase] = useState("");
 
+  const getColor = (duedate) => {
+    const dueDate = DateTime.fromISO(duedate, { zone: 'America/Los_Angeles' });
+    const now = DateTime.now().setZone('America/Los_Angeles');
+
+    const diffInDays = dueDate.diff(now, 'days').days;
+
+    if (diffInDays < 0) {
+        return "red";
+    } else if (diffInDays >= 0 && diffInDays <= 3) {
+        return "coral";
+    } else if (diffInDays > 3 && diffInDays <= 7) {
+        return "green";
+    } else if (diffInDays > 7) {
+        return "blue";
+    } else {
+        return "black";
+    }
+}
 
   const saveChanges = async () => {
     deletedAssignments.forEach(async (id) => {
@@ -118,7 +138,7 @@ function ViewAssignments() {
         { data && selectedIndex>=0 && data.map((assignment, index)=> (
           assignment.class_id == classes[selectedIndex].id ?
           <div>
-          <div style={{  marginLeft:'14px', fontSize:'14px', color:'coral', fontWeight:'bold'}}>
+          <div style={{  marginLeft:'14px', fontSize:'14px', color:getColor(assignment.duedate), fontWeight:'bold'}}>
           {new Date(assignment.duedate).toLocaleString('en-US', {
             timeZone: 'America/Los_Angeles',  // Specify PST time zone
             year: 'numeric',                  // Display full year

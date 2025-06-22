@@ -12,10 +12,9 @@ import ListItemText from '@mui/material/ListItemText';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import TextField from '@mui/material/TextField';
-import { obtainClassesAPICall } from './API';
+import { obtainClassesAPICall, deleteClassAPICall, updateClassAPICall } from './API';
 import { useContext } from 'react';
 import { AuthContext } from './AuthContext';
-import { updateClassAPICall } from './API.js';
 import AlertMassage from './AlertMessage.js';
 import { checkEmails } from './Utils.js';
 
@@ -28,6 +27,16 @@ function EditClass() {
   const [selectedIndex, setSelectedIndex] = useState();
   const { user } = useContext(AuthContext);
   const [status, setStatusBase] = useState("");
+
+  const deleteClass = async () => {
+    if (selectedIndex > 0) {
+      let class_detail = {};
+      class_detail.class_id = data[selectedIndex].id;
+      setSelectedIndex(0);
+      await deleteClassAPICall(user, class_detail);
+      setStatusBase({ type: "info", msg: "Group successfully deleted.", key: Math.random() });
+    }
+  }
 
   const saveClass = async () => {
     if (selectedIndex >= 0) {
@@ -43,12 +52,12 @@ function EditClass() {
             await updateClassAPICall(user, class_detail);
             setCounter(counter + 1);
             await fetchData();
-            setStatusBase({ type: "info", msg: "Class successfully saved.", key: Math.random() });
+            setStatusBase({ type: "info", msg: "Group successfully saved.", key: Math.random() });
           } else {
             setStatusBase({ type: "error", msg: "Total chars in emails list exceeded 8000 chars.", key: Math.random() });
           }
         } else {
-          setStatusBase({ type: "error", msg: "Your class does not have any email.", key: Math.random() });
+          setStatusBase({ type: "error", msg: "Your group does not have any email.", key: Math.random() });
         }
       } else {
         setStatusBase({ type: "error", msg: "Additional Emails field value is not valid.", key: Math.random() });
@@ -85,11 +94,15 @@ function EditClass() {
     setData(response);
     setEmails(response[selectedIndex]?.email_ids.split(','));
     setAdditionalEmails('');
+
+    if(response.length <= 0) {
+      setStatusBase({ type: "error", msg: "No Group available, please create a Group.", key: Math.random() });
+    }
   }
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [selectedIndex]);
 
   if (data && data.length > 0) {
     return (
@@ -157,7 +170,10 @@ function EditClass() {
           }
         </div>
         <div style={{ display: 'flex', flexDirection: 'row', marginTop: '20px' }}>
-          <Button variant="contained" onClick={saveClass}>Save Class</Button>
+          <Button variant="contained" style={{ marginRight: '30px' }} onClick={saveClass}>Save Group</Button>
+          {selectedIndex >= 0 && data[selectedIndex].class_name !== 'Independent'?
+          <Button variant="contained" onClick={deleteClass}>Delete Group</Button> : 
+          <Button variant="contained" disabled onClick={deleteClass}>Delete Group</Button>}
         </div>
         {status ? <AlertMassage key={status.key} message={status.msg} type={status.type} /> : null}
       </div>
