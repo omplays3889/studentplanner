@@ -1,4 +1,5 @@
 
+
 export const getUserAPICall = async (userData) => {
   let api_endpoint = 'https://my-planner-api-b2cvagfzdqavhca3.westus2-01.azurewebsites.net/api/getUser?email_id=' + userData.email;
   const response = await fetch(api_endpoint, {
@@ -6,7 +7,7 @@ export const getUserAPICall = async (userData) => {
     headers: {
       'Content-Type': 'application/json',
       'Host': 'my-planner-api-b2cvagfzdqavhca3.westus2-01.azurewebsites.net',
-      'Authorization': 'Basic c3R1ZGVudHBsYW5uZXItYWRtaW4tb206NTA1MjQzMTMtYjUzMy00ZjlmLTg5ODktYmNjYzNlZjcwOTQ0'
+      'Authorization': process.env.REACT_APP_API_AUTH
     }
   }).catch(error => console.error('There was a problem with the fetch operation:', error));
 
@@ -24,7 +25,7 @@ export const createUserAPICall = async (userData) => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Basic c3R1ZGVudHBsYW5uZXItYWRtaW4tb206NTA1MjQzMTMtYjUzMy00ZjlmLTg5ODktYmNjYzNlZjcwOTQ0'
+      'Authorization': process.env.REACT_APP_API_AUTH
     },
     body: JSON.stringify({
       user_type: userData.user_type,
@@ -47,7 +48,7 @@ export const obtainAssignmentsAPICall = async (userData) => {
     headers: {
       'Content-Type': 'application/json',
       'Host': 'my-planner-api-b2cvagfzdqavhca3.westus2-01.azurewebsites.net',
-      'Authorization': 'Basic c3R1ZGVudHBsYW5uZXItYWRtaW4tb206NTA1MjQzMTMtYjUzMy00ZjlmLTg5ODktYmNjYzNlZjcwOTQ0'
+      'Authorization': process.env.REACT_APP_API_AUTH
     }
   }).catch(error => console.error('There was a problem with the fetch operation:', error));
 
@@ -66,7 +67,7 @@ export const obtainClassesAPICall = async (userData) => {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Basic c3R1ZGVudHBsYW5uZXItYWRtaW4tb206NTA1MjQzMTMtYjUzMy00ZjlmLTg5ODktYmNjYzNlZjcwOTQ0'
+      'Authorization': process.env.REACT_APP_API_AUTH
     }
   }).catch(error => console.error('There was a problem with the fetch operation:', error));
 
@@ -86,7 +87,7 @@ export const createClassAPICall = async (userData, class_detail) => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Basic c3R1ZGVudHBsYW5uZXItYWRtaW4tb206NTA1MjQzMTMtYjUzMy00ZjlmLTg5ODktYmNjYzNlZjcwOTQ0'
+      'Authorization': process.env.REACT_APP_API_AUTH
     },
     body: JSON.stringify(class_detail)
   }).catch(error => console.error('There was a problem with the fetch operation:', error));
@@ -107,7 +108,7 @@ export const updateClassAPICall = async (userData, class_detail) => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Basic c3R1ZGVudHBsYW5uZXItYWRtaW4tb206NTA1MjQzMTMtYjUzMy00ZjlmLTg5ODktYmNjYzNlZjcwOTQ0'
+      'Authorization': process.env.REACT_APP_API_AUTH
     },
     body: JSON.stringify(class_detail)
   }).catch(error => console.error('There was a problem with the fetch operation:', error));
@@ -128,7 +129,7 @@ export const deleteClassAPICall = async (userData, class_detail) => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Basic c3R1ZGVudHBsYW5uZXItYWRtaW4tb206NTA1MjQzMTMtYjUzMy00ZjlmLTg5ODktYmNjYzNlZjcwOTQ0'
+      'Authorization': process.env.REACT_APP_API_AUTH
     },
     body: JSON.stringify(class_detail)
   }).catch(error => console.error('There was a problem with the fetch operation:', error));
@@ -149,7 +150,7 @@ export const createAssignmentAPICall = async (userData, assignment_detail) => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Basic c3R1ZGVudHBsYW5uZXItYWRtaW4tb206NTA1MjQzMTMtYjUzMy00ZjlmLTg5ODktYmNjYzNlZjcwOTQ0'
+      'Authorization': process.env.REACT_APP_API_AUTH
     },
     body: JSON.stringify(assignment_detail)
   }).catch(error => console.error('There was a problem with the fetch operation:', error));
@@ -170,7 +171,7 @@ export const deleteAssignmentAPICall = async (userData, assignment_id) => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Basic c3R1ZGVudHBsYW5uZXItYWRtaW4tb206NTA1MjQzMTMtYjUzMy00ZjlmLTg5ODktYmNjYzNlZjcwOTQ0'
+      'Authorization': process.env.REACT_APP_API_AUTH
     },
     body: JSON.stringify({
       "assignment_id":assignment_id
