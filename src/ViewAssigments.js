@@ -38,13 +38,11 @@ function ViewAssignments() {
     const diffInDays = dueDate.diff(now, 'days').days;
 
     if (diffInDays < 0) {
-        return "red";
-    } else if (diffInDays >= 0 && diffInDays <= 3) {
+        return "indianred";
+    } else if (diffInDays >= 0 && diffInDays <= 5) {
         return "coral";
-    } else if (diffInDays > 3 && diffInDays <= 7) {
-        return "green";
-    } else if (diffInDays > 7) {
-        return "blue";
+    } else if (diffInDays > 5) {
+        return "rgb(21, 100, 255)";
     } else {
         return "black";
     }
