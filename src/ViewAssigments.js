@@ -16,6 +16,15 @@ import { AuthContext } from './AuthContext';
 import { obtainAssignmentsAPICall, deleteAssignmentAPICall, obtainClassesAPICall } from './API';
 import AlertMassage from './AlertMessage.js';
 import {Divider, Box} from '@mui/material';
+import { Chip } from '@mui/material';
+
+const ZoneLegend = () => (
+  <Box sx={{ display: 'flex', gap: 1, mb: 1 }}>
+    <Chip label="Red Zone: Past Due Date" sx={{ backgroundColor: 'indianred', color: 'white' }} />
+    <Chip label="Coral Zone: Due in 1-5 days" sx={{ backgroundColor: 'coral', color: 'white' }} />
+    <Chip label="Blue Zone: Due in 5+ days" sx={{ backgroundColor: '#1e88e5', color: 'white' }} />
+  </Box>
+);
 
 const { DateTime } = require("luxon");
 
@@ -37,9 +46,9 @@ function ViewAssignments() {
 
     const diffInDays = dueDate.diff(now, 'days').days;
 
-    if (diffInDays < 0) {
+    if (diffInDays <= 0) {
         return "indianred";
-    } else if (diffInDays >= 0 && diffInDays <= 5) {
+    } else if (diffInDays > 0 && diffInDays <= 5) {
         return "coral";
     } else if (diffInDays > 5) {
         return "rgb(21, 100, 255)";
@@ -126,7 +135,7 @@ function ViewAssignments() {
             </Select>
           </FormControl>
         </div>
-        <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '20px', width: '500px'}}>
+        <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '20px', width: '550px'}}>
         {!assignmentsExists && (
           <FormHelperText style={{ marginLeft: '12px' }}>
               No assignment exists for the selected Group.
@@ -172,6 +181,7 @@ function ViewAssignments() {
              
             </List>
         </div>
+        <ZoneLegend />
         <div style={{ display: 'flex', flexDirection: 'row', marginTop: '20px' }}>
           <Button variant="contained" onClick={saveChanges}>Save Changes</Button>
         </div>
