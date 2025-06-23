@@ -19,31 +19,32 @@ function Intropage() {
           </h1>
           <p>
             In today's tech-driven world, students juggle busy schedules and need all the help they can get to stay organized.
-            Our Student Planner makes technology help students to keep their assignments at one place and let the technology take care of reminders.
+            Our AI based Student Planner makes technology help students to keep their assignments at one place and let the technology take care of reminders.
           </p>
           <p>
             Here is how it works...
           </p>
           <p>
-            Teachers create classes enrolling their students with students email addresses.
-            Teachers then can create assignments for any class they created through out the school year.
+            You can create Groups including other students with students email addresses.
+            You can then create assignments for any class/group you created through out the school year.
           </p>
           <p>
-            Students can login and see list of their assignments per class they are enrolled in.
-            Students can also create personal assignment for them selves.
+            Other students in your group can login and see list of their assignments per group they are enrolled in.
+            Students can also create personal assignments for them selves.
           </p>
           <p>
             Not Only That...
           </p>
           <label>
             Students will receive email notifications every day with all their pending assignments sorted by their deadlines dates.
+            It has color coded scheme that makes assignments reminders visiblly prioritized.
           </label>
           <p>
             Isn't this AMAZING?? And Its Free !!!
           </p>
           <label>
-               Don't wait, ask your school to onboard with our platform.
-               Reach out to onboarding@students-planner.com
+               Don't wait, ask your school/teacher to onboard with this AI planner.
+               Need help? Reach out to omplays3889@gmail.com
             </label>
         </div>
         <div style={{width: '50%', height: '80%'}}>

@@ -47,7 +47,7 @@ function CreateClass() {
             style: { fontSize: '14px' },
           }}
           inputProps={{
-            maxLength: 254,
+            maxLength: 25,
             style: { fontSize: '14px' },
           }}
           onChange={e => setName(e.target.value)}
@@ -67,7 +67,7 @@ function CreateClass() {
             style: { fontSize: '14px' },
           }}
           inputProps={{
-            maxLength: 7999,
+            maxLength: 500,
             style: { fontSize: '14px', minHeight: '150px' },
           }}
         />
