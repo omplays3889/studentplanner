@@ -1,0 +1,17 @@
+[
+    {
+        "id": 1,
+        "teacher_id": 2,
+        "class_name": "History",
+        "teacher_email_id": "omplays3889@gmail.com",
+        "email_ids": "patel3889@mydusd.org, cmaheta84@gmail.com"
+    },
+    {
+        "id": 2,
+        "teacher_id": 2,
+        "class_name": "Maths",
+        "teacher_email_id": "omplays3889@gmail.com",
+        "email_ids": "patel3889@mydusd.org, cmaheta84@gmail.com"
+    }
+
+]
