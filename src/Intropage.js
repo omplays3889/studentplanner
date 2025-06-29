@@ -19,7 +19,7 @@ function Intropage() {
           </h1>
           <p>
             In today's tech-driven world, students juggle busy schedules and need all the help they can get to stay organized.
-            Our AI based Student Planner makes technology help students to keep their assignments at one place and let the technology take care of reminders.
+            Our AI based Students Planner makes technology help students to keep their assignments at one place and let the technology take care of reminders.
           </p>
           <p>
             Here is how it works...
