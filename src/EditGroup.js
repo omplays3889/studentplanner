@@ -12,13 +12,13 @@ import ListItemText from '@mui/material/ListItemText';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import TextField from '@mui/material/TextField';
-import { obtainClassesAPICall, deleteClassAPICall, updateClassAPICall } from './API';
+import { obtainGroupsAPICall, deleteGroupAPICall, updateGroupAPICall } from './API.js';
 import { useContext } from 'react';
-import { AuthContext } from './AuthContext';
+import { AuthContext } from './AuthContext.js';
 import AlertMassage from './AlertMessage.js';
 import { checkEmails } from './Utils.js';
 
-function EditClass() {
+function EditGroup() {
 
   const [data, setData] = useState([]);
   const [emails, setEmails] = useState([]);
@@ -28,28 +28,28 @@ function EditClass() {
   const { user } = useContext(AuthContext);
   const [status, setStatusBase] = useState("");
 
-  const deleteClass = async () => {
+  const deleteGroup = async () => {
     if (selectedIndex > 0) {
-      let class_detail = {};
-      class_detail.class_id = data[selectedIndex].id;
+      let group_detail = {};
+      group_detail.group_id = data[selectedIndex].id;
       setSelectedIndex(0);
-      await deleteClassAPICall(user, class_detail);
+      await deleteGroupAPICall(user, group_detail);
       setStatusBase({ type: "info", msg: "Group successfully deleted.", key: Math.random() });
     }
   }
 
-  const saveClass = async () => {
+  const saveGroup = async () => {
     if (selectedIndex >= 0) {
       const result = checkEmails(emails.join(',') + ',' + additionalEmails);
       if (result.allValid) {
         let refinedEmails = result.emails;
         if (refinedEmails.length > 0) {
           if (refinedEmails.length < 7999) {
-            let class_detail = {};
-            class_detail.class_id = data[selectedIndex].id;
-            class_detail.class_name = data[selectedIndex].class_name;
-            class_detail.email_ids = refinedEmails;
-            await updateClassAPICall(user, class_detail);
+            let group_detail = {};
+            group_detail.group_id = data[selectedIndex].id;
+            group_detail.group_name = data[selectedIndex].group_name;
+            group_detail.email_ids = refinedEmails;
+            await updateGroupAPICall(user, group_detail);
             setCounter(counter + 1);
             await fetchData();
             setStatusBase({ type: "info", msg: "Group successfully saved.", key: Math.random() });
@@ -89,8 +89,7 @@ function EditClass() {
   };
 
   const fetchData = async () => {
-    //const response = await fetch('./classes.json');
-    const response = await obtainClassesAPICall(user);
+    const response = await obtainGroupsAPICall(user);
     setData(response);
     setEmails(response[selectedIndex]?.email_ids.split(','));
     setAdditionalEmails('');
@@ -114,13 +113,13 @@ function EditClass() {
               labelId="demo-select-small-label"
               id="demo-select-small"
               value={selectedIndex >= 0 ? data[selectedIndex].id : ""}
-              label="ClassName"
+              label="GroupName"
               sx={{ fontSize: '14px' }}
               onChange={handleChange}
             >
-              {data.map(myClass => (
-                <MenuItem sx={{ fontSize: '14px' }} key={myClass.id} value={myClass.id}>
-                  {myClass.class_name}
+              {data.map(myGroup => (
+                <MenuItem sx={{ fontSize: '14px' }} key={myGroup.id} value={myGroup.id}>
+                  {myGroup.group_name}
                 </MenuItem>
               ))}
             </Select>
@@ -170,10 +169,10 @@ function EditClass() {
           }
         </div>
         <div style={{ display: 'flex', flexDirection: 'row', marginTop: '20px' }}>
-          <Button variant="contained" style={{ marginRight: '30px' }} onClick={saveClass}>Save Group</Button>
-          {selectedIndex >= 0 && data[selectedIndex].class_name !== 'Independent'?
-          <Button variant="contained" onClick={deleteClass}>Delete Group</Button> : 
-          <Button variant="contained" disabled onClick={deleteClass}>Delete Group</Button>}
+          <Button variant="contained" style={{ marginRight: '30px' }} onClick={saveGroup}>Save Group</Button>
+          {selectedIndex >= 0 && data[selectedIndex].group_name !== 'Independent'?
+          <Button variant="contained" onClick={deleteGroup}>Delete Group</Button> : 
+          <Button variant="contained" disabled onClick={deleteGroup}>Delete Group</Button>}
         </div>
         {status ? <AlertMassage key={status.key} message={status.msg} type={status.type} /> : null}
       </div>
@@ -183,4 +182,4 @@ function EditClass() {
   }
 }
 
-export default EditClass;
+export default EditGroup;

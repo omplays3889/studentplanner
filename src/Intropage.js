@@ -26,7 +26,7 @@ function Intropage() {
           </p>
           <p>
             You can create Groups including other students with students email addresses.
-            You can then create assignments for any class/group you created through out the school year.
+            You can then create assignments for any group/group you created through out the school year.
           </p>
           <p>
             Other students in your group can login and see list of their assignments per group they are enrolled in.

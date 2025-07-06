@@ -13,7 +13,7 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useContext } from 'react';
 import { AuthContext } from './AuthContext';
-import { obtainAssignmentsAPICall, deleteAssignmentAPICall, obtainClassesAPICall } from './API';
+import { obtainAssignmentsAPICall, deleteAssignmentAPICall, obtainGroupsAPICall } from './API';
 import AlertMassage from './AlertMessage.js';
 import {Divider, Box} from '@mui/material';
 import { Chip } from '@mui/material';
@@ -33,8 +33,8 @@ function ViewAssignments() {
   const { user} = useContext(AuthContext);
   const [data, setData] = useState([]);
   const [deletedAssignments, setDeletedAssignments] = useState([]);
-  const [classes, setClasses] = useState([]);
-  const [assignmentClasses, setAssignmentClasses] = useState([]);
+  const [groups, setGroups] = useState([]);
+  const [assignmentGroups, setAssignmentGroups] = useState([]);
   const [assignmentsExists, setAssignmentsExists] = useState(false);
   const [counter, setCounter] = useState(0);
   const [selectedIndex, setSelectedIndex] = useState();
@@ -74,10 +74,10 @@ function ViewAssignments() {
 
   const handleChange = (event) => {
     fetchData();
-    for (let i = 0; i < classes.length; i++) {
-      if (classes[i].id === event.target.value) {
+    for (let i = 0; i < groups.length; i++) {
+      if (groups[i].id === event.target.value) {
         setSelectedIndex(i);
-        assignmentClasses.map(cls =>  {if(cls.id == classes[i].id) {
+        assignmentGroups.map(cls =>  {if(cls.id == groups[i].id) {
           setAssignmentsExists(true);
         }
       });
@@ -89,22 +89,22 @@ function ViewAssignments() {
   const fetchData = async () => {
     const response = await obtainAssignmentsAPICall(user);
     const jsonData = response;
-    const jsonClasses = [];
+    const jsonGroups = [];
     const jsonIds = [];
     for (let i = 0; i < jsonData.length; i++) {
-      if (jsonIds.includes(jsonData[i].class_id) == false) {
-        jsonIds.push(jsonData[i].class_id);
-        let jsonClass = {
-          id: jsonData[i].class_id,
-          name: jsonData[i].class_name
+      if (jsonIds.includes(jsonData[i].group_id) == false) {
+        jsonIds.push(jsonData[i].group_id);
+        let jsonGroup = {
+          id: jsonData[i].group_id,
+          name: jsonData[i].group_name
         }
-        jsonClasses.push(jsonClass);
+        jsonGroups.push(jsonGroup);
       }
     }
 
-    const classesResponse = await obtainClassesAPICall(user);
-    setClasses(classesResponse);
-    setAssignmentClasses(jsonClasses);
+    const groupsResponse = await obtainGroupsAPICall(user);
+    setGroups(groupsResponse);
+    setAssignmentGroups(jsonGroups);
     setData(jsonData);
     setDeletedAssignments([]);
   }
@@ -113,7 +113,7 @@ function ViewAssignments() {
     fetchData();
   }, []);
 
-  if (data && classes) {
+  if (data && groups) {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', width: '100%', overflowX: 'hidden', height: '100%' }}>
         <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '20px', width: '250px', marginTop:'10px'}}>
@@ -123,13 +123,13 @@ function ViewAssignments() {
               sx={{fontSize:'14px'}}
               labelId="demo-select-small-label"
               id="demo-select-small"
-              value={selectedIndex >= 0 ? classes[selectedIndex].id : ""}
-              label="ClassName"
+              value={selectedIndex >= 0 ? groups[selectedIndex].id : ""}
+              label="GroupName"
               onChange={handleChange}
             >
-              {classes.map(myClass => (
-                <MenuItem sx={{fontSize:'14px'}} key={myClass.id} value={myClass.id}>
-                  {myClass.class_name}
+              {groups.map(myGroup => (
+                <MenuItem sx={{fontSize:'14px'}} key={myGroup.id} value={myGroup.id}>
+                  {myGroup.group_name}
                 </MenuItem>
               ))}
             </Select>
@@ -143,7 +143,7 @@ function ViewAssignments() {
         )}
         <List>
         { data && selectedIndex>=0 && data.map((assignment, index)=> (
-          assignment.class_id == classes[selectedIndex].id ?
+          assignment.group_id == groups[selectedIndex].id ?
           <div>
           <div style={{  marginLeft:'14px', fontSize:'14px', color:getColor(assignment.duedate), fontWeight:'bold'}}>
           {new Date(assignment.duedate).toLocaleString('en-US', {

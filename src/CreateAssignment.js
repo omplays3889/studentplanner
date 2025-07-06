@@ -13,7 +13,7 @@ import dayjs from 'dayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { obtainClassesAPICall, createAssignmentAPICall } from './API.js';
+import { obtainGroupsAPICall, createAssignmentAPICall } from './API.js';
 import { useContext } from 'react';
 import { AuthContext } from './AuthContext';
 import AlertMassage from './AlertMessage.js';
@@ -35,11 +35,11 @@ function CreateAssignment() {
   const [status, setStatusBase] = useState("");
 
   const createAssignment = async () => {
-    if (data[selectedIndex]?.class_name?.length > 0 
+    if (data[selectedIndex]?.group_name?.length > 0 
       && name?.length > 0 && details?.length > 0) {
       let assignment_detail = {};
-      assignment_detail.class_name = data[selectedIndex]?.class_name;
-      assignment_detail.class_id = data[selectedIndex]?.id;
+      assignment_detail.group_name = data[selectedIndex]?.group_name;
+      assignment_detail.group_id = data[selectedIndex]?.id;
 
       assignment_detail.title = name;
       assignment_detail.details = details;
@@ -69,7 +69,7 @@ function CreateAssignment() {
   };
 
   const fetchData = async () => {
-    const response = await obtainClassesAPICall(user);
+    const response = await obtainGroupsAPICall(user);
     setData(response);
   }
 
@@ -91,12 +91,12 @@ function CreateAssignment() {
               labelId="demo-select-small-label"
               id="demo-select-small"
               value={selectedIndex >= 0 ? data[selectedIndex].id : ""}
-              label="ClassName"
+              label="GroupName"
               onChange={handleChange}
             >
-              {data.map(myClass => (
-                <MenuItem sx={{ fontSize: '14px' }} key={myClass.id} value={myClass.id}>
-                  {myClass.class_name}
+              {data.map(myGroup => (
+                <MenuItem sx={{ fontSize: '14px' }} key={myGroup.id} value={myGroup.id}>
+                  {myGroup.group_name}
                 </MenuItem>
               ))}
             </Select>

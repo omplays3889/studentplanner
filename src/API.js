@@ -60,8 +60,8 @@ export const obtainAssignmentsAPICall = async (userData) => {
   }
 }
 
-export const obtainClassesAPICall = async (userData) => {
-  let api_endpoint = 'https://my-planner-api-b2cvagfzdqavhca3.westus2-01.azurewebsites.net/api/obtainclasses?email_id=' + userData.email_id;
+export const obtainGroupsAPICall = async (userData) => {
+  let api_endpoint = 'https://my-planner-api-b2cvagfzdqavhca3.westus2-01.azurewebsites.net/api/obtaingroups?email_id=' + userData.email_id;
 
   const response = await fetch(api_endpoint, {
     method: 'GET',
@@ -80,8 +80,8 @@ export const obtainClassesAPICall = async (userData) => {
 
 }
 
-export const createClassAPICall = async (userData, class_detail) => {
-  let api_endpoint = 'https://my-planner-api-b2cvagfzdqavhca3.westus2-01.azurewebsites.net/api/createclass?email_id=' + userData.email_id;
+export const createGroupAPICall = async (userData, group_detail) => {
+  let api_endpoint = 'https://my-planner-api-b2cvagfzdqavhca3.westus2-01.azurewebsites.net/api/creategroup?email_id=' + userData.email_id;
 
   const response = await fetch(api_endpoint, {
     method: 'POST',
@@ -89,7 +89,7 @@ export const createClassAPICall = async (userData, class_detail) => {
       'Content-Type': 'application/json',
       'Authorization': process.env.REACT_APP_API_AUTH
     },
-    body: JSON.stringify(class_detail)
+    body: JSON.stringify(group_detail)
   }).catch(error => console.error('There was a problem with the fetch operation:', error));
 
   if (response && response.ok) {
@@ -101,8 +101,8 @@ export const createClassAPICall = async (userData, class_detail) => {
 
 }
 
-export const updateClassAPICall = async (userData, class_detail) => {
-  let api_endpoint = 'https://my-planner-api-b2cvagfzdqavhca3.westus2-01.azurewebsites.net/api/updateclass?email_id=' + userData.email_id;
+export const updateGroupAPICall = async (userData, group_detail) => {
+  let api_endpoint = 'https://my-planner-api-b2cvagfzdqavhca3.westus2-01.azurewebsites.net/api/updategroup?email_id=' + userData.email_id;
 
   const response = await fetch(api_endpoint, {
     method: 'POST',
@@ -110,7 +110,7 @@ export const updateClassAPICall = async (userData, class_detail) => {
       'Content-Type': 'application/json',
       'Authorization': process.env.REACT_APP_API_AUTH
     },
-    body: JSON.stringify(class_detail)
+    body: JSON.stringify(group_detail)
   }).catch(error => console.error('There was a problem with the fetch operation:', error));
 
   if (response && response.ok) {
@@ -122,8 +122,8 @@ export const updateClassAPICall = async (userData, class_detail) => {
 
 }
 
-export const deleteClassAPICall = async (userData, class_detail) => {
-  let api_endpoint = 'https://my-planner-api-b2cvagfzdqavhca3.westus2-01.azurewebsites.net/api/deleteclass?email_id=' + userData.email_id;
+export const deleteGroupAPICall = async (userData, group_detail) => {
+  let api_endpoint = 'https://my-planner-api-b2cvagfzdqavhca3.westus2-01.azurewebsites.net/api/deletegroup?email_id=' + userData.email_id;
 
   const response = await fetch(api_endpoint, {
     method: 'POST',
@@ -131,7 +131,7 @@ export const deleteClassAPICall = async (userData, class_detail) => {
       'Content-Type': 'application/json',
       'Authorization': process.env.REACT_APP_API_AUTH
     },
-    body: JSON.stringify(class_detail)
+    body: JSON.stringify(group_detail)
   }).catch(error => console.error('There was a problem with the fetch operation:', error));
 
   if (response && response.ok) {

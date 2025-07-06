@@ -4,13 +4,13 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { useState } from 'react';
 import { useContext } from 'react';
-import { AuthContext } from './AuthContext';
+import { AuthContext } from './AuthContext.js';
 import Alert from '@mui/material/Alert';
-import { createClassAPICall } from './API.js';
+import { createGroupAPICall } from './API.js';
 import AlertMassage from './AlertMessage.js';
 import {checkEmails} from './Utils.js';
 
-function CreateClass() {
+function CreateGroup() {
 
   const [name, setName] = useState('');
   const [emails, setEmails] = useState('');
@@ -18,14 +18,14 @@ function CreateClass() {
   const [status, setStatusBase] = useState("");
 
 
-  const createClass = async () => {
+  const createGroup = async () => {
     const result = checkEmails(emails);
 
     if (name && name.length > 0 && result.allValid) {
-      let class_detail = {};
-      class_detail.class_name = name;
-      class_detail.email_ids = result.emails;
-      await createClassAPICall(user, class_detail);
+      let group_detail = {};
+      group_detail.group_name = name;
+      group_detail.email_ids = result.emails;
+      await createGroupAPICall(user, group_detail);
       setName('');
       setEmails('');
       setStatusBase({ type: "info", msg: "Group successfully created.", key: Math.random() });
@@ -73,11 +73,11 @@ function CreateClass() {
         />
       </div>
       <div style={{ display: 'flex', flexDirection: 'row', marginTop: '20px' }}>
-        <Button variant="contained" onClick={createClass}>Create Group</Button>
+        <Button variant="contained" onClick={createGroup}>Create Group</Button>
       </div>
       {status ? <AlertMassage key={status.key} message={status.msg} type={status.type} /> : null}
     </div>
   );
 }
 
-export default CreateClass;
+export default CreateGroup;

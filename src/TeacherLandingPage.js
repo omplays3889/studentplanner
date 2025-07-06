@@ -9,8 +9,8 @@ import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
-import CreateClass from './CreateClass';
-import EditClass from './EditClass';
+import CreateGroup from './CreateGroup';
+import EditGroup from './EditGroup';
 import CreateAssignment from './CreateAssignment';
 import ViewAssignments from './ViewAssigments';
 
@@ -65,10 +65,10 @@ export function BasicTabs() {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-       <CreateClass/>
+       <CreateGroup/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <EditClass/>
+        <EditGroup/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
         <CreateAssignment/>
