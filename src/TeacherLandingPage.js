@@ -13,6 +13,11 @@ import CreateGroup from './CreateGroup';
 import EditGroup from './EditGroup';
 import CreateAssignment from './CreateAssignment';
 import ViewAssignments from './ViewAssigments';
+import ChatWidget from './ChatWidget';
+import { useContext } from 'react';
+import { AuthContext } from './AuthContext';
+import { createStudentPlannerLLM } from './LLMService';
+import { obtainAssignmentsAPICall, obtainGroupsAPICall } from './API';
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -80,7 +85,43 @@ export function BasicTabs() {
   );
 }
 function TeacherLandingPage() {
+  const { user} = useContext(AuthContext);
+  const [assignments, setAssignments] = useState([]);
+  const [classes, setClasses] = useState([]);
 
+  const refreshData = React.useCallback(async () => {
+    if (user?.email_id) {
+      const assignmentsResult = await obtainAssignmentsAPICall(user);
+      const groupsResult = await obtainGroupsAPICall(user);
+      
+      if (assignmentsResult !== "ERROR") setAssignments(assignmentsResult);
+      if (groupsResult !== "ERROR") setClasses(groupsResult);
+    }
+  }, [user?.email_id]);
+
+  // Initialize data on mount
+  React.useEffect(() => {
+    refreshData();
+  }, [user?.email_id, refreshData]);
+
+  // Create LLM service for student planner
+  const createMessageProcessor = () => {
+    const ApiService = (import('./API')).default;
+    const llmService = createStudentPlannerLLM(assignments, classes, ApiService);
+    return async (inputMessage, dataContext, user, config) => {
+      return await llmService.processUserMessage(inputMessage, user);
+    };
+  };
+
+  // Chat configuration
+  const chatConfig = {
+    onRefreshData: refreshData
+  };
+
+  const chatDataContext = {
+    assignments,
+    classes
+  };
 
   return (
 
@@ -90,7 +131,15 @@ function TeacherLandingPage() {
       <div style={{ display: 'flex', marginTop: '20px', width: '100%', height: '80%', justifyContent: 'center' }}>
         <BasicTabs />
       </div>
-
+      <ChatWidget 
+        config={chatConfig}
+        title="Student Planner Assistant"
+        dataContext={chatDataContext}
+        user={user}
+        onProcessMessage={createMessageProcessor()}
+        welcomeMessage={`Hello! I can help you with your student planner:\n• Create assignments: "Create assignment Math Quiz for Algebra due tomorrow"\n• View assignments: "Show assignments due today"\n• Create groups: "Create group Physics 101"\n• View groups: "Show my groups"`}
+        placeholder="Ask me about assignments and groups..."
+      />
 
     </div>
 
