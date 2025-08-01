@@ -29,11 +29,13 @@ function EditGroup() {
   const [status, setStatusBase] = useState("");
 
   const deleteGroup = async () => {
-    if (selectedIndex > 0) {
+    if (selectedIndex >= 0) {
       let group_detail = {};
       group_detail.group_id = data[selectedIndex].id;
       setSelectedIndex(0);
       await deleteGroupAPICall(user, group_detail);
+      setCounter(counter + 1);
+      await fetchData();
       setStatusBase({ type: "info", msg: "Group successfully deleted.", key: Math.random() });
     }
   }

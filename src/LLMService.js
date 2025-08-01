@@ -1,5 +1,5 @@
 import Groq from 'groq-sdk';
-import config from './config';
+import config from './Config';
 import { createAssignmentAPICall, createGroupAPICall, obtainGroupsAPICall } from './API';
 
 // Initialize Groq client
