@@ -44,7 +44,7 @@ function Intropage() {
           </p>
           <label>
             Don't wait—ask your school or teacher to onboard with this AI-powered planner.
-            Need help? Reach out to: omplays3889@gmail.com
+            Need help? Reach out to: students.planner.help@gmail.com
             </label>
         </div>
         <div style={{width: '50%', height: '80%'}}>
